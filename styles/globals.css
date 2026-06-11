@@ -389,15 +389,53 @@ textarea.form-control { min-height: 80px; resize: vertical; }
 .progress-fill.amarelo { background: var(--amarelo); }
 .progress-fill.vermelho { background: var(--vermelho); }
 
+/* ===== HAMBURGER ===== */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.hamburger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--azul);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 99;
+}
+.sidebar-overlay.visible { display: block; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .calendario-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); }
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+  .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; }
   .stats-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .calendario-grid { grid-template-columns: 1fr; }
   .page-body { padding: 16px; }
+  .hamburger-btn { display: flex; }
+  .page-header { gap: 8px; }
 }

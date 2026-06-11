@@ -43,13 +43,20 @@ export function AuthProvider({ children }) {
     setProfile(null);
   }
 
+  async function updateProfile(nome) {
+    if (!user) return { error: 'Não autenticado' };
+    const { error } = await supabase.from('profiles').update({ nome }).eq('id', user.id);
+    if (!error) setProfile(p => ({ ...p, nome }));
+    return { error };
+  }
+
   const isCoord = profile?.role === 'coordenadora';
   const isDirecao = profile?.role === 'direcao';
   const isProfessor = profile?.role === 'professor';
   const canEdit = isCoord || isDirecao;
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signIn, signOut, isCoord, isDirecao, isProfessor, canEdit }}>
+    <AuthContext.Provider value={{ user, profile, loading, signIn, signOut, updateProfile, isCoord, isDirecao, isProfessor, canEdit }}>
       {children}
     </AuthContext.Provider>
   );

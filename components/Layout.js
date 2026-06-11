@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS = [
@@ -19,8 +19,12 @@ const COORD_ITEMS = [
 ];
 
 export default function Layout({ children, title = 'CSP Gestão 2027', subtitle = '' }) {
-  const { user, profile, loading, signOut, isCoord } = useAuth();
+  const { user, profile, loading, signOut, updateProfile, isCoord } = useAuth();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [nomeEdit, setNomeEdit] = useState('');
+  const [savingNome, setSavingNome] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -53,8 +57,11 @@ export default function Layout({ children, title = 'CSP Gestão 2027', subtitle 
         <title>{title} — CSP 2027</title>
       </Head>
       <div className="app-layout">
+        {/* OVERLAY MOBILE */}
+        <div className={`sidebar-overlay${sidebarOpen ? ' visible' : ''}`} onClick={() => setSidebarOpen(false)} />
+
         {/* SIDEBAR */}
-        <aside className="sidebar">
+        <aside className={`sidebar${sidebarOpen ? ' open' : ''}`}>
           <div className="sidebar-logo">
             <div className="csp-logo-letters">
               <span className="c">c</span><span className="s">s</span><span className="p">p</span>
@@ -72,6 +79,7 @@ export default function Layout({ children, title = 'CSP Gestão 2027', subtitle 
                 key={item.href}
                 href={item.href}
                 className={`nav-item${router.pathname === item.href ? ' active' : ''}`}
+                onClick={() => setSidebarOpen(false)}
               >
                 <span className="nav-icon">{item.icon}</span>
                 {item.label}
@@ -86,6 +94,7 @@ export default function Layout({ children, title = 'CSP Gestão 2027', subtitle 
                     key={item.href}
                     href={item.href}
                     className={`nav-item${router.pathname === item.href ? ' active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
                   >
                     <span className="nav-icon">{item.icon}</span>
                     {item.label}
@@ -96,10 +105,15 @@ export default function Layout({ children, title = 'CSP Gestão 2027', subtitle 
           </nav>
 
           <div className="sidebar-user">
-            <div className="sidebar-user-info">
+            <div
+              className="sidebar-user-info"
+              style={{ cursor: 'pointer' }}
+              title="Clique para editar seu nome"
+              onClick={() => { setNomeEdit(profile?.nome || ''); setShowProfile(true); }}
+            >
               <div className="sidebar-avatar">{getInitials(profile?.nome)}</div>
               <div>
-                <div className="sidebar-user-name">{profile?.nome || 'Usuário'}</div>
+                <div className="sidebar-user-name">{profile?.nome || 'Usuário'} ✏️</div>
                 <div className="sidebar-user-role">{getRoleLabel(profile?.role)}</div>
               </div>
             </div>
@@ -110,11 +124,58 @@ export default function Layout({ children, title = 'CSP Gestão 2027', subtitle 
         </aside>
 
         {/* MAIN */}
+        {/* MODAL EDITAR PERFIL */}
+        {showProfile && (
+          <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setShowProfile(false)}>
+            <div className="modal" style={{ maxWidth: '360px' }}>
+              <div className="modal-header">
+                <h3>Meu Perfil</h3>
+                <button className="modal-close" onClick={() => setShowProfile(false)}>×</button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                  <label className="form-label">Nome de exibição</label>
+                  <input
+                    className="form-control"
+                    value={nomeEdit}
+                    onChange={e => setNomeEdit(e.target.value)}
+                    placeholder="Seu nome completo"
+                    autoFocus
+                  />
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--cinza-texto)' }}>
+                  E-mail: {user?.email}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={() => setShowProfile(false)}>Cancelar</button>
+                <button
+                  className="btn btn-primary"
+                  disabled={savingNome || !nomeEdit.trim()}
+                  onClick={async () => {
+                    setSavingNome(true);
+                    await updateProfile(nomeEdit.trim());
+                    setSavingNome(false);
+                    setShowProfile(false);
+                  }}
+                >
+                  {savingNome ? 'Salvando...' : '✅ Salvar'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="main-content">
           <div className="page-header">
-            <div>
-              <h1>{title}</h1>
-              {subtitle && <p>{subtitle}</p>}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button className="hamburger-btn" onClick={() => setSidebarOpen(o => !o)} aria-label="Menu">
+                <span /><span /><span />
+              </button>
+              <div>
+                <h1>{title}</h1>
+                {subtitle && <p>{subtitle}</p>}
+              </div>
             </div>
             <div style={{ fontSize: '12px', color: 'var(--cinza-texto)' }}>
               📅 {new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
