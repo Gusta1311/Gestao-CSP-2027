@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Gestão Escolar CSP 2027</title>
+<style>
+:root {
+  --azul: #1B5CA8;
+  --azul-escuro: #0F3D72;
+  --azul-claro: #2B7DD4;
+  --verde: #7DC242;
+  --verde-escuro: #5A9B2A;
+  --branco: #FFFFFF;
+  --cinza-claro: #F4F6F9;
+  --cinza-medio: #E0E6EF;
+  --cinza-texto: #555E6E;
+  --preto-suave: #1A2B4A;
+  --vermelho: #E53935;
+  --amarelo: #F9A825;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--cinza-claro); color: var(--preto-suave); }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul) 60%, var(--azul-claro) 100%);
+  color: white; padding: 0; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.header-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+}
+.logo-area { display: flex; align-items: center; gap: 14px; }
+.logo-svg { width: 56px; height: 56px; }
+.logo-text h1 { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
+.logo-text p { font-size: 11px; opacity: 0.85; letter-spacing: 1.5px; text-transform: uppercase; }
+.header-badge {
+  background: var(--verde); color: white; padding: 6px 16px;
+  border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+}
+
+/* NAV */
+nav {
+  background: rgba(0,0,0,0.2); display: flex; overflow-x: auto; padding: 0 20px;
+}
+nav a {
+  color: rgba(255,255,255,0.85); text-decoration: none; padding: 10px 16px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.3px; white-space: nowrap;
+  border-bottom: 3px solid transparent; transition: all 0.2s;
+}
+nav a:hover { color: var(--verde); border-bottom-color: var(--verde); }
+
+/* MAIN */
+main { max-width: 1400px; margin: 0 auto; padding: 28px 24px; }
+
+/* SECTION */
+.section {
+  background: white; border-radius: 12px; margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden;
+}
+.section-header {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+  color: white; padding: 20px 28px; display: flex; align-items: center; gap: 14px;
+}
+.section-header .icon {
+  width: 44px; height: 44px; background: rgba(255,255,255,0.2);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.section-header h2 { font-size: 18px; font-weight: 700; }
+.section-header p { font-size: 12px; opacity: 0.85; margin-top: 3px; }
+.section-body { padding: 28px; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul) 50%, var(--azul-claro) 100%);
+  color: white; border-radius: 16px; padding: 60px 48px; margin-bottom: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 8px 40px rgba(27,92,168,0.35);
+}
+.cover-left h1 { font-size: 42px; font-weight: 800; line-height: 1.15; }
+.cover-left h1 span { color: var(--verde); }
+.cover-left p { font-size: 16px; opacity: 0.85; margin-top: 10px; max-width: 500px; line-height: 1.6; }
+.cover-meta { margin-top: 28px; display: flex; gap: 24px; flex-wrap: wrap; }
+.cover-meta-item { background: rgba(255,255,255,0.12); border-radius: 10px; padding: 12px 20px; }
+.cover-meta-item .label { font-size: 10px; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; }
+.cover-meta-item .value { font-size: 15px; font-weight: 700; margin-top: 3px; color: var(--verde); }
+.cover-right { text-align: center; flex-shrink: 0; }
+.cover-logo-big { font-size: 80px; font-weight: 900; letter-spacing: -2px; }
+.cover-logo-big .c { color: var(--azul-claro); }
+.cover-logo-big .s { color: var(--verde); }
+.cover-logo-big .p { color: white; }
+.cover-sub { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.7; margin-top: 6px; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* CARDS */
+.card {
+  background: var(--cinza-claro); border-radius: 10px; padding: 18px;
+  border-left: 4px solid var(--azul);
+}
+.card.verde { border-left-color: var(--verde); }
+.card.vermelho { border-left-color: var(--vermelho); }
+.card.amarelo { border-left-color: var(--amarelo); }
+.card h4 { font-size: 13px; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
+.card.verde h4 { color: var(--verde-escuro); }
+.card.vermelho h4 { color: var(--vermelho); }
+.card.amarelo h4 { color: #E65100; }
+.card ul { list-style: none; }
+.card ul li { font-size: 12px; color: var(--cinza-texto); padding: 3px 0; padding-left: 14px; position: relative; }
+.card ul li::before { content: '•'; position: absolute; left: 0; color: var(--azul); font-weight: 700; }
+.card.verde ul li::before { color: var(--verde); }
+.card.vermelho ul li::before { color: var(--vermelho); }
+.card.amarelo ul li::before { color: var(--amarelo); }
+
+/* PRIORITY TAGS */
+.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+.tag-critico { background: #FFEBEE; color: var(--vermelho); }
+.tag-importante { background: #FFF8E1; color: #E65100; }
+.tag-complementar { background: #E8F5E9; color: var(--verde-escuro); }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  background: var(--azul); color: white; padding: 10px 14px;
+  text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+td { padding: 9px 14px; border-bottom: 1px solid var(--cinza-medio); vertical-align: top; }
+tr:nth-child(even) td { background: var(--cinza-claro); }
+tr:hover td { background: #EBF3FF; }
+
+/* CALENDAR */
+.calendar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.month-card {
+  border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.month-header {
+  background: var(--azul); color: white; padding: 12px 16px;
+  font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; align-items: center;
+}
+.month-header .month-badge {
+  background: var(--verde); color: white; border-radius: 6px; padding: 2px 8px; font-size: 11px;
+}
+.month-days {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  background: white; font-size: 11px;
+}
+.day-header {
+  background: var(--azul-escuro); color: white; text-align: center;
+  padding: 6px 4px; font-size: 10px; font-weight: 700;
+}
+.day-cell {
+  padding: 5px 4px; text-align: center; min-height: 34px; border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee; position: relative; cursor: default;
+}
+.day-cell.empty { background: #fafafa; }
+.day-cell.holiday { background: #FFF3E0; }
+.day-cell.holiday .day-num { color: var(--vermelho); font-weight: 700; }
+.day-cell.event { background: #E3F2FD; }
+.day-cell.event .day-num { color: var(--azul); font-weight: 700; }
+.day-cell.recess { background: #F3E5F5; }
+.day-cell.weekend { background: #FAFAFA; }
+.day-cell.weekend .day-num { color: #9E9E9E; }
+.day-num { font-weight: 600; font-size: 12px; display: block; }
+.day-dot { width: 5px; height: 5px; border-radius: 50%; margin: 1px auto; }
+.dot-green { background: var(--verde); }
+.dot-red { background: var(--vermelho); }
+.dot-blue { background: var(--azul); }
+.dot-purple { background: #9C27B0; }
+.month-events { background: white; padding: 10px 14px; border-top: 2px solid var(--cinza-medio); }
+.month-event-item { font-size: 11px; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
+.month-event-item .date-tag {
+  background: var(--azul); color: white; border-radius: 4px; padding: 1px 6px;
+  font-size: 10px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+}
+.month-event-item.feriado .date-tag { background: var(--vermelho); }
+.month-event-item.evento .date-tag { background: var(--verde-escuro); }
+.month-event-item.adm .date-tag { background: #7B1FA2; }
+.month-event-item .desc { color: var(--cinza-texto); line-height: 1.4; }
+
+/* INDICATORS */
+.indicator-card {
+  background: white; border-radius: 10px; padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 4px solid var(--azul);
+  text-align: center;
+}
+.indicator-card.verde { border-top-color: var(--verde); }
+.indicator-card.amarelo { border-top-color: var(--amarelo); }
+.indicator-card.vermelho { border-top-color: var(--vermelho); }
+.indicator-value { font-size: 32px; font-weight: 800; color: var(--azul); }
+.indicator-card.verde .indicator-value { color: var(--verde-escuro); }
+.indicator-card.amarelo .indicator-value { color: #E65100; }
+.indicator-card.vermelho .indicator-value { color: var(--vermelho); }
+.indicator-label { font-size: 12px; color: var(--cinza-texto); margin-top: 4px; font-weight: 600; }
+.indicator-meta { font-size: 11px; color: #9E9E9E; margin-top: 2px; }
+
+/* CHECKLIST */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid var(--cinza-medio); font-size: 13px;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 18px; height: 18px; border: 2px solid var(--azul); border-radius: 4px;
+  flex-shrink: 0; margin-top: 1px;
+}
+.checklist li .text { color: var(--preto-suave); }
+.checklist li .tag { margin-left: auto; }
+
+/* RISK TABLE */
+.risk-alto td:first-child { border-left: 4px solid var(--vermelho); }
+.risk-medio td:first-child { border-left: 4px solid var(--amarelo); }
+.risk-baixo td:first-child { border-left: 4px solid var(--verde); }
+
+/* PRINT */
+@media print {
+  .header { position: static; }
+  nav { display: none; }
+  .section { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+  body { background: white; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .calendar-grid { grid-template-columns: 1fr 1fr; }
+  .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .cover { flex-direction: column; gap: 24px; }
+  .cover-left h1 { font-size: 28px; }
+}
+@media (max-width: 600px) {
+  .calendar-grid, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* LEGEND */
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--cinza-texto); }
+.legend-color { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+/* PHASE BADGE */
+.phase-badge {
+  display: inline-flex; align-items: center; gap: 8px; background: var(--cinza-claro);
+  border: 1px solid var(--cinza-medio); border-radius: 20px; padding: 4px 14px 4px 6px;
+  font-size: 12px; font-weight: 600; color: var(--azul); margin-bottom: 20px;
+}
+.phase-badge .num {
+  background: var(--azul); color: white; width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+}
+
+h3.sub { font-size: 15px; color: var(--azul); margin: 20px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--cinza-medio); }
+h3.sub-verde { color: var(--verde-escuro); border-bottom-color: var(--verde); }
+p.desc { font-size: 13px; color: var(--cinza-texto); line-height: 1.7; margin-bottom: 14px; }
+
+.highlight-box {
+  background: linear-gradient(135deg, #E3F2FD, #E8F5E9);
+  border-left: 4px solid var(--verde); border-radius: 8px;
+  padding: 14px 18px; margin: 16px 0; font-size: 13px; color: var(--preto-suave);
+  line-height: 1.6;
+}
+.alert-box {
+  background: #FFF3E0; border-left: 4px solid var(--amarelo);
+  border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 13px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <svg class="logo-svg" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="28" fill="white"/>
+        <text x="8" y="38" font-family="Arial" font-weight="900" font-size="26">
+          <tspan fill="#1B5CA8">c</tspan><tspan fill="#7DC242">s</tspan><tspan fill="#2B7DD4">p</tspan>
+        </text>
+      </svg>
+      <div class="logo-text">
+        <h1>Colégio São Paulo</h1>
+        <p>Sistema de Gestão Escolar · 2027</p>
+      </div>
+    </div>
+    <div class="header-badge">📋 CSP · ANO LETIVO 2027</div>
+  </div>
+  <nav>
+    <a href="#fase1">📊 Fase 1 · Rotina</a>
+    <a href="#fase2">📅 Fase 2 · Calendário</a>
+    <a href="#fase3">⚙️ Fase 3 · Cronograma</a>
+    <a href="#fase4">📈 Fase 4 · Dashboard</a>
+    <a href="#fase5">📊 Fase 5 · Excel</a>
+    <a href="#fase6">💡 Fase 6 · Notion</a>
+    <a href="#fase7">✅ Fase 7 · Checklists</a>
+    <a href="#fase8">⚠️ Fase 8 · Riscos</a>
+    <a href="#fase9">📖 Fase 9 · Manual</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-left">
+    <h1>Sistema Completo de<br><span>Gestão Escolar</span><br>Ano Letivo 2027</h1>
+    <p>Planejamento estratégico, calendário acadêmico, cronogramas operacionais, dashboards de indicadores e ferramentas de gestão para a Coordenação Pedagógica do Colégio São Paulo.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="label">Instituição</div><div class="value">Colégio São Paulo</div></div>
+      <div class="cover-meta-item"><div class="label">Ano Letivo</div><div class="value">2027</div></div>
+      <div class="cover-meta-item"><div class="label">Documento</div><div class="value">Versão 1.0</div></div>
+      <div class="cover-meta-item"><div class="label">Setor</div><div class="value">Coordenação Pedagógica</div></div>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="cover-logo-big"><span class="c">c</span><span class="s">s</span><span class="p">p</span></div>
+    <div class="cover-sub">Colégio São Paulo</div>
+  </div>
+</div>
+
+<!-- ===================== FASE 1 ===================== -->
+<div class="section" id="fase1">
+  <div class="section-header">
+    <div class="icon">📊</div>
+    <div>
+      <h2>FASE 1 — Mapeamento da Rotina da Coordenação Escolar</h2>
+      <p>Análise completa de todas as atividades que a coordenação pedagógica precisa administrar durante o ano letivo</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">1</span> Análise e Classificação da Rotina Pedagógica e Administrativa</div>
+
+    <h3 class="sub">🔴 Atividades CRÍTICAS — Impacto direto no funcionamento da escola</h3>
+    <div class="grid-3">
+      <div class="card vermelho">
+        <h4>📋 Planejamento Pedagógico</h4>
+        <ul>
+          <li>Elaboração do Projeto Político-Pedagógico (PPP)</li>
+          <li>Definição de metas e objetivos anuais</li>
+          <li>Distribuição de aulas por disciplina</li>
+          <li>Alinhamento curricular com BNCC</li>
+          <li>Planejamento bimestral por área</li>
+          <li>Validação dos planos de ensino docentes</li>
+        </ul>
+      </div>
+      <div class="card vermelho">
+        <h4>📝 Avaliações e Resultados</h4>
+        <ul>
+          <li>Elaboração do calendário de avaliações</li>
+          <li>Supervisão da aplicação de provas</li>
+          <li>Controle do lançamento de notas</li>
+          <li>Acompanhamento do desempenho por turma</li>
+          <li>Organização dos Conselhos de Classe</li>
+          <li>Entrega e comunicação dos boletins</li>
+        </ul>
+      </div>
+      <div class="card vermelho">
+        <h4>🎓 Matrículas e Rematrículas</h4>
+        <ul>
+          <li>Abertura do processo de rematrícula</li>
+          <li>Documentação de novos alunos</li>
+          <li>Organização e fechamento de turmas</li>
+          <li>Transferências (entrada e saída)</li>
+          <li>Controle de vagas por série</li>
+          <li>Adequação de grade horária</li>
+        </ul>
+      </div>
+      <div class="card vermelho">
+        <h4>👩‍🏫 Gestão Docente</h4>
+        <ul>
+          <li>Acompanhamento dos professores em sala</li>
+          <li>Controle de frequência e pontualidade docente</li>
+          <li>Substituições e reposições de aula</li>
+          <li>Acompanhamento do cumprimento do plano de ensino</li>
+          <li>Reuniões de feedback individuais</li>
+          <li>Registro de ocorrências</li>
+        </ul>
+      </div>
+      <div class="card vermelho">
+        <h4>📊 Frequência e Controle</h4>
+        <ul>
+          <li>Monitoramento diário da frequência discente</li>
+          <li>Controle do limite de faltas (25%)</li>
+          <li>Notificação de responsáveis por ausência</li>
+          <li>Reposição de conteúdo para faltosos</li>
+          <li>Relatórios de frequência mensais</li>
+        </ul>
+      </div>
+      <div class="card vermelho">
+        <h4>📅 Calendário Escolar</h4>
+        <ul>
+          <li>Elaboração e aprovação do calendário anual</li>
+          <li>Cumprimento dos 200 dias letivos</li>
+          <li>Reposição de dias não letivos</li>
+          <li>Comunicação de alterações ao corpo docente e pais</li>
+          <li>Registro e controle de dias letivos cumpridos</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">🟡 Atividades IMPORTANTES — Qualidade pedagógica e institucional</h3>
+    <div class="grid-3">
+      <div class="card amarelo">
+        <h4>🏫 Formação Docente Continuada</h4>
+        <ul>
+          <li>Semana Pedagógica (início de ano)</li>
+          <li>Encontros de formação bimestrais</li>
+          <li>Grupos de estudo por área</li>
+          <li>Palestra com especialistas externos</li>
+          <li>Avaliação da formação pelos professores</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>🤝 Reuniões com Pais</h4>
+        <ul>
+          <li>Reunião de início de ano (apresentação)</li>
+          <li>Reuniões bimestrais de entrega de boletins</li>
+          <li>Atendimentos individuais</li>
+          <li>Comunicados de situação crítica</li>
+          <li>Pesquisa de satisfação semestral</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>🔬 Projetos Pedagógicos</h4>
+        <ul>
+          <li>Projetos interdisciplinares bimestrais</li>
+          <li>Feira de Ciências e Cultura</li>
+          <li>Olimpíadas de Matemática e Português</li>
+          <li>Projetos de leitura e literatura</li>
+          <li>Semana do Meio Ambiente</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>📱 Simulados e Preparação</h4>
+        <ul>
+          <li>Simulados ENEM (Ensino Médio)</li>
+          <li>Simulados diagnósticos por série</li>
+          <li>Análise de resultados e plano de ação</li>
+          <li>Preparação para olimpíadas externas</li>
+          <li>Reforço escolar e monitoria</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>📢 Comunicação Institucional</h4>
+        <ul>
+          <li>Comunicados para pais e responsáveis</li>
+          <li>Circulares pedagógicas</li>
+          <li>Publicações nas redes sociais da escola</li>
+          <li>Atualizações no sistema de gestão</li>
+          <li>Relatórios para a Direção</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>📦 Recuperação e Progressão</h4>
+        <ul>
+          <li>Recuperação paralela (durante o bimestre)</li>
+          <li>Recuperação bimestral (após avaliação)</li>
+          <li>Plano de estudos para alunos em risco</li>
+          <li>Conselho Final de aprovação/retenção</li>
+          <li>Comunicação de resultados a responsáveis</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub sub-verde">🟢 Atividades COMPLEMENTARES — Enriquecimento e Cultura Escolar</h3>
+    <div class="grid-3">
+      <div class="card verde">
+        <h4>🎭 Eventos Culturais e Esportivos</h4>
+        <ul>
+          <li>Gincana Escolar</li>
+          <li>Jogos Internos (Olimpíadas CSP)</li>
+          <li>Mostra Cultural e Artística</li>
+          <li>Sarau Literário</li>
+          <li>Festival de Talentos</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>🌍 Datas Comemorativas</h4>
+        <ul>
+          <li>Semana do Meio Ambiente (junho)</li>
+          <li>Dia do Livro (outubro)</li>
+          <li>Consciência Negra (novembro)</li>
+          <li>Dia das Mães / Pais</li>
+          <li>Festa Junina</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>🎓 Encerramentos e Formaturas</h4>
+        <ul>
+          <li>Colação de grau do 9º ano / 3º EM</li>
+          <li>Entrega de certificados e diplomas</li>
+          <li>Festa de encerramento do ano letivo</li>
+          <li>Álbum e memórias da turma</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>📌 Síntese Estratégica:</strong> A coordenação pedagógica do CSP gerencia simultaneamente três dimensões — <strong>pedagógica</strong> (currículo, avaliações, projetos), <strong>administrativa</strong> (matrículas, calendário, documentação) e <strong>relacional</strong> (pais, professores, direção). O sucesso do ano letivo depende da distribuição equilibrada dessas atividades ao longo dos 12 meses.
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FASE 2 — CALENDÁRIO ===================== -->
+<div class="section" id="fase2">
+  <div class="section-header">
+    <div class="icon">📅</div>
+    <div>
+      <h2>FASE 2 — Calendário Acadêmico Completo 2027</h2>
+      <p>Planejamento mês a mês com feriados nacionais, eventos pedagógicos, administrativos e datas comemorativas</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">2</span> Calendário Oficial CSP · Ano Letivo 2027</div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-color" style="background:#FFCDD2"></div> Feriado Nacional</div>
+      <div class="legend-item"><div class="legend-color" style="background:#BBDEFB"></div> Evento Pedagógico</div>
+      <div class="legend-item"><div class="legend-color" style="background:#C8E6C9"></div> Evento Escolar</div>
+      <div class="legend-item"><div class="legend-color" style="background:#E1BEE7"></div> Recesso / Férias</div>
+      <div class="legend-item"><div class="legend-color" style="background:#FFF9C4"></div> Avaliação / Simulado</div>
+      <div class="legend-item"><div class="legend-color" style="background:#FAFAFA"></div> Fim de semana</div>
+    </div>
+
+    <div class="calendar-grid">
+
+      <!-- JANEIRO -->
+      <div class="month-card">
+        <div class="month-header">Janeiro 2027 <span class="month-badge">Planejamento</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <!-- Week 1 -->
+          <div class="day-cell holiday"><span class="day-num">1</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell recess"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <!-- Week 2 -->
+          <div class="day-cell weekend"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <!-- Week 3 -->
+          <div class="day-cell weekend"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <!-- Week 4 -->
+          <div class="day-cell weekend"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell weekend"><span class="day-num">28</span></div>
+          <!-- Week 5 -->
+          <div class="day-cell weekend"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item feriado"><span class="date-tag">01/01</span><span class="desc">🔴 Confraternização Universal — Feriado Nacional</span></div>
+          <div class="month-event-item adm"><span class="date-tag">05-17</span><span class="desc">🟣 Período de Rematrículas e novas matrículas</span></div>
+          <div class="month-event-item adm"><span class="date-tag">18-22</span><span class="desc">🟣 Reuniões da Equipe Diretiva — Planejamento 2027</span></div>
+          <div class="month-event-item evento"><span class="date-tag">25-29</span><span class="desc">🟢 Semana Pedagógica — Planejamento docente</span></div>
+          <div class="month-event-item adm"><span class="date-tag">30/01</span><span class="desc">🟣 Entrega dos Planos de Ensino pelos professores</span></div>
+        </div>
+      </div>
+
+      <!-- FEVEREIRO -->
+      <div class="month-card">
+        <div class="month-header">Fevereiro 2027 <span class="month-badge">Início das Aulas</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell weekend"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <div class="day-cell holiday"><span class="day-num">8</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell holiday"><span class="day-num">9</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell holiday"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell weekend"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell weekend"><span class="day-num">20</span></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <div class="day-cell event"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell weekend"><span class="day-num">27</span></div>
+          <div class="day-cell weekend"><span class="day-num">28</span></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item evento"><span class="date-tag">01/02</span><span class="desc">🟢 INÍCIO DAS AULAS — Ano Letivo 2027</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">08-09</span><span class="desc">🔴 Carnaval — Não há aula</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">10/02</span><span class="desc">🔴 Quarta-feira de Cinzas — Sem aula (manhã)</span></div>
+          <div class="month-event-item evento"><span class="date-tag">11/02</span><span class="desc">🟢 Reunião de Pais — Início de Ano (Apresentação)</span></div>
+          <div class="month-event-item adm"><span class="date-tag">25/02</span><span class="desc">🟣 Conselho de Classe Diagnóstico (1ª semana alunos)</span></div>
+        </div>
+      </div>
+
+      <!-- MARÇO -->
+      <div class="month-card">
+        <div class="month-header">Março 2027 <span class="month-badge">1º Bimestre</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell weekend"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell weekend"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell weekend"><span class="day-num">20</span></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <div class="day-cell event"><span class="day-num">22</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span></div>
+          <div class="day-cell recess"><span class="day-num">26</span></div>
+          <div class="day-cell weekend"><span class="day-num">27</span></div>
+          <div class="day-cell holiday"><span class="day-num">28</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell weekend"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span></div>
+          <div class="day-cell event"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item evento"><span class="date-tag">08/03</span><span class="desc">🟢 Dia Internacional da Mulher — Atividade especial</span></div>
+          <div class="month-event-item evento"><span class="date-tag">22/03</span><span class="desc">🟢 Dia Mundial da Água — Projeto Ambiental</span></div>
+          <div class="month-event-item adm"><span class="date-tag">22-26</span><span class="desc">🟣 Avaliações do 1º Bimestre (Semana de provas)</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">28/03</span><span class="desc">🔴 Páscoa — Feriado (escola fechada 26-28/03)</span></div>
+        </div>
+      </div>
+
+      <!-- ABRIL -->
+      <div class="month-card">
+        <div class="month-header">Abril 2027 <span class="month-badge">Encerra 1º Bim.</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+          <div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell weekend"><span class="day-num">4</span></div>
+          <div class="day-cell weekend"><span class="day-num">5</span></div>
+          <div class="day-cell event"><span class="day-num">6</span></div>
+          <div class="day-cell event"><span class="day-num">7</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell weekend"><span class="day-num">11</span></div>
+          <div class="day-cell weekend"><span class="day-num">12</span></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell event"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell weekend"><span class="day-num">18</span></div>
+          <div class="day-cell weekend"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell holiday"><span class="day-num">21</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell weekend"><span class="day-num">25</span></div>
+          <div class="day-cell weekend"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell event"><span class="day-num">28</span></div>
+          <div class="day-cell event"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span><div class="day-dot dot-purple"></div></div>
+          <div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item evento"><span class="date-tag">07/04</span><span class="desc">🟢 Dia Mundial da Saúde — Semana da Saúde CSP</span></div>
+          <div class="month-event-item adm"><span class="date-tag">15/04</span><span class="desc">🟣 Conselho de Classe 1º Bimestre</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">21/04</span><span class="desc">🔴 Tiradentes — Feriado Nacional</span></div>
+          <div class="month-event-item evento"><span class="date-tag">22/04</span><span class="desc">🟢 Dia da Terra — Projeto Sustentabilidade</span></div>
+          <div class="month-event-item adm"><span class="date-tag">30/04</span><span class="desc">🟣 Entrega de Boletins 1º Bimestre / Reunião de Pais</span></div>
+        </div>
+      </div>
+
+      <!-- MAIO -->
+      <div class="month-card">
+        <div class="month-header">Maio 2027 <span class="month-badge">2º Bimestre</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+          <div class="day-cell weekend"><span class="day-num">1</span></div>
+          <div class="day-cell weekend"><span class="day-num">2</span></div>
+          <div class="day-cell holiday"><span class="day-num">3</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell event"><span class="day-num">6</span></div>
+          <div class="day-cell event"><span class="day-num">7</span></div>
+          <div class="day-cell weekend"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell event"><span class="day-num">14</span></div>
+          <div class="day-cell weekend"><span class="day-num">15</span></div>
+          <div class="day-cell weekend"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell event"><span class="day-num">21</span></div>
+          <div class="day-cell weekend"><span class="day-num">22</span></div>
+          <div class="day-cell weekend"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell holiday"><span class="day-num">27</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell recess"><span class="day-num">28</span></div>
+          <div class="day-cell weekend"><span class="day-num">29</span></div>
+          <div class="day-cell weekend"><span class="day-num">30</span></div>
+          <div class="day-cell event"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item feriado"><span class="date-tag">01/05</span><span class="desc">🔴 Dia do Trabalhador — Feriado Nacional (sábado)</span></div>
+          <div class="month-event-item evento"><span class="date-tag">09/05</span><span class="desc">🟢 Dia das Mães — Apresentação especial das turmas</span></div>
+          <div class="month-event-item adm"><span class="date-tag">17-21</span><span class="desc">🟣 Simulado Diagnóstico ENEM (Ensino Médio)</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">27/05</span><span class="desc">🔴 Corpus Christi — Feriado Nacional</span></div>
+          <div class="month-event-item adm"><span class="date-tag">28/05</span><span class="desc">🟣 Ponto Facultativo (ponte Corpus Christi)</span></div>
+        </div>
+      </div>
+
+      <!-- JUNHO -->
+      <div class="month-card">
+        <div class="month-header">Junho 2027 <span class="month-badge">Encerra 2º Bim.</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell weekend"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell weekend"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell weekend"><span class="day-num">20</span></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <div class="day-cell event"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell weekend"><span class="day-num">27</span></div>
+          <div class="day-cell weekend"><span class="day-num">28</span></div>
+          <div class="day-cell event"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span><div class="day-dot dot-purple"></div></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item evento"><span class="date-tag">05/06</span><span class="desc">🟢 Dia do Meio Ambiente — Semana Ambiental CSP</span></div>
+          <div class="month-event-item evento"><span class="date-tag">12/06</span><span class="desc">🟢 Festa Junina do CSP (Noite)</span></div>
+          <div class="month-event-item adm"><span class="date-tag">14-18</span><span class="desc">🟣 Avaliações do 2º Bimestre</span></div>
+          <div class="month-event-item adm"><span class="date-tag">19/06</span><span class="desc">🟣 Formação Docente — Tarde livre para professores</span></div>
+          <div class="month-event-item adm"><span class="date-tag">25/06</span><span class="desc">🟣 Conselho de Classe 2º Bimestre</span></div>
+          <div class="month-event-item adm"><span class="date-tag">30/06</span><span class="desc">🟣 Entrega de Boletins / Último dia antes das férias</span></div>
+        </div>
+      </div>
+
+      <!-- JULHO -->
+      <div class="month-card">
+        <div class="month-header">Julho 2027 <span class="month-badge">Férias / Recesso</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+          <div class="day-cell recess"><span class="day-num">1</span></div>
+          <div class="day-cell recess"><span class="day-num">2</span></div>
+          <div class="day-cell weekend"><span class="day-num">3</span></div>
+          <div class="day-cell weekend"><span class="day-num">4</span></div>
+          <div class="day-cell recess"><span class="day-num">5</span></div>
+          <div class="day-cell recess"><span class="day-num">6</span></div>
+          <div class="day-cell recess"><span class="day-num">7</span></div>
+          <div class="day-cell recess"><span class="day-num">8</span></div>
+          <div class="day-cell holiday"><span class="day-num">9</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell weekend"><span class="day-num">10</span></div>
+          <div class="day-cell weekend"><span class="day-num">11</span></div>
+          <div class="day-cell recess"><span class="day-num">12</span></div>
+          <div class="day-cell recess"><span class="day-num">13</span></div>
+          <div class="day-cell recess"><span class="day-num">14</span></div>
+          <div class="day-cell recess"><span class="day-num">15</span></div>
+          <div class="day-cell recess"><span class="day-num">16</span></div>
+          <div class="day-cell weekend"><span class="day-num">17</span></div>
+          <div class="day-cell weekend"><span class="day-num">18</span></div>
+          <div class="day-cell recess"><span class="day-num">19</span></div>
+          <div class="day-cell recess"><span class="day-num">20</span></div>
+          <div class="day-cell recess"><span class="day-num">21</span></div>
+          <div class="day-cell event"><span class="day-num">22</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell weekend"><span class="day-num">24</span></div>
+          <div class="day-cell weekend"><span class="day-num">25</span></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell event"><span class="day-num">28</span></div>
+          <div class="day-cell event"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span></div>
+          <div class="day-cell weekend"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item recess" style=""><span class="date-tag" style="background:#9C27B0">01-21</span><span class="desc">🟣 FÉRIAS ESCOLARES — Recesso de Julho</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">09/07</span><span class="desc">🔴 Revolução Constitucionalista (SP) — Feriado Estadual</span></div>
+          <div class="month-event-item adm"><span class="date-tag">19-21</span><span class="desc">🟣 Semana Pedagógica de retorno — Planejamento 2º semestre</span></div>
+          <div class="month-event-item evento"><span class="date-tag">22/07</span><span class="desc">🟢 RETORNO ÀS AULAS — 2º Semestre / 3º Bimestre</span></div>
+        </div>
+      </div>
+
+      <!-- AGOSTO -->
+      <div class="month-card">
+        <div class="month-header">Agosto 2027 <span class="month-badge">3º Bimestre</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell weekend"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell event"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <div class="day-cell weekend"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <div class="day-cell weekend"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell weekend"><span class="day-num">28</span></div>
+          <div class="day-cell weekend"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span></div>
+          <div class="day-cell event"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item evento"><span class="date-tag">08/08</span><span class="desc">🟢 Dia dos Pais — Apresentação especial das turmas</span></div>
+          <div class="month-event-item adm"><span class="date-tag">16-20</span><span class="desc">🟣 Simulado 2 ENEM — Ensino Médio (tarde)</span></div>
+          <div class="month-event-item adm"><span class="date-tag">23/08</span><span class="desc">🟣 Formação Docente Bimestral</span></div>
+          <div class="month-event-item evento"><span class="date-tag">30/08</span><span class="desc">🟢 Olimpíada de Matemática — Fase interna CSP</span></div>
+        </div>
+      </div>
+
+      <!-- SETEMBRO -->
+      <div class="month-card">
+        <div class="month-header">Setembro 2027 <span class="month-badge">Encerra 3º Bim.</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell weekend"><span class="day-num">4</span></div>
+          <div class="day-cell weekend"><span class="day-num">5</span></div>
+          <div class="day-cell event"><span class="day-num">6</span></div>
+          <div class="day-cell holiday"><span class="day-num">7</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">8</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell weekend"><span class="day-num">11</span></div>
+          <div class="day-cell weekend"><span class="day-num">12</span></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell event"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell weekend"><span class="day-num">18</span></div>
+          <div class="day-cell weekend"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell event"><span class="day-num">21</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">22</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell weekend"><span class="day-num">25</span></div>
+          <div class="day-cell weekend"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell event"><span class="day-num">28</span></div>
+          <div class="day-cell event"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span><div class="day-dot dot-purple"></div></div>
+          <div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item feriado"><span class="date-tag">07/09</span><span class="desc">🔴 Independência do Brasil — Feriado Nacional</span></div>
+          <div class="month-event-item evento"><span class="date-tag">08/09</span><span class="desc">🟢 Semana da Pátria — Atividades Cívicas CSP</span></div>
+          <div class="month-event-item evento"><span class="date-tag">21/09</span><span class="desc">🟢 Dia da Árvore / Semana do Meio Ambiente</span></div>
+          <div class="month-event-item adm"><span class="date-tag">22-26</span><span class="desc">🟣 Avaliações do 3º Bimestre</span></div>
+          <div class="month-event-item adm"><span class="date-tag">30/09</span><span class="desc">🟣 Conselho de Classe 3º Bimestre</span></div>
+        </div>
+      </div>
+
+      <!-- OUTUBRO -->
+      <div class="month-card">
+        <div class="month-header">Outubro 2027 <span class="month-badge">4º Bimestre</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+          <div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell weekend"><span class="day-num">3</span></div>
+          <div class="day-cell weekend"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell event"><span class="day-num">6</span></div>
+          <div class="day-cell event"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell weekend"><span class="day-num">10</span></div>
+          <div class="day-cell weekend"><span class="day-num">11</span></div>
+          <div class="day-cell holiday"><span class="day-num">12</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">13</span></div>
+          <div class="day-cell event"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell weekend"><span class="day-num">17</span></div>
+          <div class="day-cell weekend"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell event"><span class="day-num">20</span></div>
+          <div class="day-cell event"><span class="day-num">21</span></div>
+          <div class="day-cell event"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell weekend"><span class="day-num">24</span></div>
+          <div class="day-cell weekend"><span class="day-num">25</span></div>
+          <div class="day-cell event"><span class="day-num">26</span></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell event"><span class="day-num">28</span></div>
+          <div class="day-cell event"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span></div>
+          <div class="day-cell weekend"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item adm"><span class="date-tag">01/10</span><span class="desc">🟣 Entrega de Boletins 3º Bimestre / Reunião de Pais</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">12/10</span><span class="desc">🔴 N.S. Aparecida + Dia das Crianças — Feriado</span></div>
+          <div class="month-event-item evento"><span class="date-tag">15/10</span><span class="desc">🟢 Dia do Professor — Homenagem especial CSP</span></div>
+          <div class="month-event-item evento"><span class="date-tag">19-23</span><span class="desc">🟢 Feira de Ciências e Cultura do CSP</span></div>
+          <div class="month-event-item adm"><span class="date-tag">25-29</span><span class="desc">🟣 Simulado 3 ENEM — Ensino Médio</span></div>
+        </div>
+      </div>
+
+      <!-- NOVEMBRO -->
+      <div class="month-card">
+        <div class="month-header">Novembro 2027 <span class="month-badge">Encerra 4º Bim.</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell holiday"><span class="day-num">2</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell event"><span class="day-num">5</span></div>
+          <div class="day-cell weekend"><span class="day-num">6</span></div>
+          <div class="day-cell weekend"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell event"><span class="day-num">12</span></div>
+          <div class="day-cell weekend"><span class="day-num">13</span></div>
+          <div class="day-cell weekend"><span class="day-num">14</span></div>
+          <div class="day-cell holiday"><span class="day-num">15</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell event"><span class="day-num">16</span></div>
+          <div class="day-cell event"><span class="day-num">17</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell event"><span class="day-num">19</span></div>
+          <div class="day-cell holiday"><span class="day-num">20</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell weekend"><span class="day-num">21</span></div>
+          <div class="day-cell weekend"><span class="day-num">22</span></div>
+          <div class="day-cell event"><span class="day-num">23</span></div>
+          <div class="day-cell event"><span class="day-num">24</span></div>
+          <div class="day-cell event"><span class="day-num">25</span></div>
+          <div class="day-cell event"><span class="day-num">26</span><div class="day-dot dot-blue"></div></div>
+          <div class="day-cell event"><span class="day-num">27</span></div>
+          <div class="day-cell weekend"><span class="day-num">28</span></div>
+          <div class="day-cell weekend"><span class="day-num">29</span></div>
+          <div class="day-cell event"><span class="day-num">30</span><div class="day-dot dot-purple"></div></div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item feriado"><span class="date-tag">02/11</span><span class="desc">🔴 Finados — Feriado Nacional</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">15/11</span><span class="desc">🔴 Proclamação da República — Feriado Nacional</span></div>
+          <div class="month-event-item adm"><span class="date-tag">17-21</span><span class="desc">🟣 Avaliações do 4º Bimestre (Finais)</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">20/11</span><span class="desc">🔴 Dia da Consciência Negra — Feriado Nacional</span></div>
+          <div class="month-event-item adm"><span class="date-tag">26/11</span><span class="desc">🟣 Conselho de Classe 4º Bimestre (Final)</span></div>
+          <div class="month-event-item adm"><span class="date-tag">30/11</span><span class="desc">🟣 Encerramento e divulgação de resultados finais</span></div>
+        </div>
+      </div>
+
+      <!-- DEZEMBRO -->
+      <div class="month-card">
+        <div class="month-header">Dezembro 2027 <span class="month-badge">Encerramento</span></div>
+        <div class="month-days">
+          <div class="day-header">Dom</div><div class="day-header">Seg</div><div class="day-header">Ter</div><div class="day-header">Qua</div><div class="day-header">Qui</div><div class="day-header">Sex</div><div class="day-header">Sáb</div>
+          <div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell event"><span class="day-num">1</span></div>
+          <div class="day-cell event"><span class="day-num">2</span></div>
+          <div class="day-cell event"><span class="day-num">3</span></div>
+          <div class="day-cell event"><span class="day-num">4</span></div>
+          <div class="day-cell weekend"><span class="day-num">5</span></div>
+          <div class="day-cell weekend"><span class="day-num">6</span></div>
+          <div class="day-cell event"><span class="day-num">7</span></div>
+          <div class="day-cell event"><span class="day-num">8</span></div>
+          <div class="day-cell event"><span class="day-num">9</span></div>
+          <div class="day-cell event"><span class="day-num">10</span><div class="day-dot dot-green"></div></div>
+          <div class="day-cell event"><span class="day-num">11</span></div>
+          <div class="day-cell weekend"><span class="day-num">12</span></div>
+          <div class="day-cell weekend"><span class="day-num">13</span></div>
+          <div class="day-cell event"><span class="day-num">14</span></div>
+          <div class="day-cell event"><span class="day-num">15</span></div>
+          <div class="day-cell event"><span class="day-num">16</span><div class="day-dot dot-purple"></div></div>
+          <div class="day-cell event"><span class="day-num">17</span></div>
+          <div class="day-cell event"><span class="day-num">18</span></div>
+          <div class="day-cell weekend"><span class="day-num">19</span></div>
+          <div class="day-cell recess"><span class="day-num">20</span></div>
+          <div class="day-cell recess"><span class="day-num">21</span></div>
+          <div class="day-cell recess"><span class="day-num">22</span></div>
+          <div class="day-cell recess"><span class="day-num">23</span></div>
+          <div class="day-cell recess"><span class="day-num">24</span></div>
+          <div class="day-cell holiday"><span class="day-num">25</span><div class="day-dot dot-red"></div></div>
+          <div class="day-cell recess"><span class="day-num">26</span></div>
+          <div class="day-cell recess"><span class="day-num">27</span></div>
+          <div class="day-cell recess"><span class="day-num">28</span></div>
+          <div class="day-cell recess"><span class="day-num">29</span></div>
+          <div class="day-cell recess"><span class="day-num">30</span></div>
+          <div class="day-cell recess"><span class="day-num">31</span></div>
+          <div class="day-cell empty"></div>
+        </div>
+        <div class="month-events">
+          <div class="month-event-item adm"><span class="date-tag">01-12</span><span class="desc">🟣 Recuperação Final e Fechamento de Notas</span></div>
+          <div class="month-event-item evento"><span class="date-tag">10/12</span><span class="desc">🟢 Festa de Encerramento do Ano Letivo</span></div>
+          <div class="month-event-item evento"><span class="date-tag">16/12</span><span class="desc">🟢 Colação de Grau — 9º Ano e 3º EM</span></div>
+          <div class="month-event-item adm"><span class="date-tag">17/12</span><span class="desc">🟣 Último dia letivo — Entrega de boletins finais</span></div>
+          <div class="month-event-item feriado"><span class="date-tag">25/12</span><span class="desc">🔴 Natal — Feriado Nacional</span></div>
+          <div class="month-event-item adm"><span class="date-tag">18-19</span><span class="desc">🟣 Reunião de avaliação do ano letivo + Planej. 2028</span></div>
+        </div>
+      </div>
+
+    </div><!-- /calendar-grid -->
+
+    <div class="alert-box" style="margin-top:20px">
+      <strong>📌 Resumo do Calendário 2027:</strong><br>
+      Feriados nacionais: Jan/1 · Fev/8-9 (Carnaval) · Fev/10 (4ª Cinzas) · Mar/28 (Páscoa) · Abr/21 (Tiradentes) · Mai/1 (Trabalhador) · Mai/27 (Corpus Christi) · Set/7 (Independência) · Out/12 (N.S. Aparecida) · Nov/2 (Finados) · Nov/15 (República) · Nov/20 (Consciência Negra) · Dez/25 (Natal)<br><br>
+      <strong>Feriado Estadual SP:</strong> Jul/9 (Revolução Constitucionalista)
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================== FASE 3 — CRONOGRAMA OPERACIONAL ===================== -->
+<div class="section" id="fase3">
+  <div class="section-header">
+    <div class="icon">⚙️</div>
+    <div>
+      <h2>FASE 3 — Cronograma Operacional da Coordenação</h2>
+      <p>Atividades diárias, semanais, mensais, bimestrais, semestrais e anuais com responsáveis e prazos</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">3</span> Rotina Operacional · Coordenação Pedagógica CSP</div>
+
+    <h3 class="sub">📆 Atividades DIÁRIAS</h3>
+    <table>
+      <tr><th>Atividade</th><th>Objetivo</th><th>Responsável</th><th>Método de Controle</th></tr>
+      <tr><td>Verificar frequência das turmas</td><td>Identificar ausências e acionar pais</td><td>Coordenação + Secretaria</td><td>Sistema de gestão escolar (diário digital)</td></tr>
+      <tr><td>Acompanhar quadro de substituições</td><td>Garantir que nenhuma turma fique sem aula</td><td>Coordenação</td><td>Quadro mural + grupo de WhatsApp docente</td></tr>
+      <tr><td>Verificar comunicados e recados</td><td>Responder demandas de pais e professores</td><td>Coordenação</td><td>E-mail / agenda de atendimento</td></tr>
+      <tr><td>Circular pelas salas de aula</td><td>Observar clima e avanço pedagógico</td><td>Coordenação</td><td>Registro em caderno de observações</td></tr>
+      <tr><td>Resolver ocorrências disciplinares</td><td>Manter ambiente escolar saudável</td><td>Coordenação</td><td>Livro de ocorrências / sistema digital</td></tr>
+    </table>
+
+    <h3 class="sub">📅 Atividades SEMANAIS</h3>
+    <table>
+      <tr><th>Atividade</th><th>Objetivo</th><th>Frequência</th><th>Responsável</th><th>Prazo</th></tr>
+      <tr><td>Reunião de alinhamento com equipe diretiva</td><td>Alinhamento estratégico semanal</td><td>Toda segunda-feira</td><td>Diretor + Coordenação</td><td>7h30 às 8h15</td></tr>
+      <tr><td>Verificar planos de aula dos professores</td><td>Garantir adequação ao currículo</td><td>Toda segunda</td><td>Coordenação</td><td>Até segunda-feira</td></tr>
+      <tr><td>Atualizar painel de indicadores</td><td>Monitorar frequência e desempenho</td><td>Toda sexta</td><td>Coordenação + Secretaria</td><td>Até 16h de sexta</td></tr>
+      <tr><td>Enviar comunicado semanal aos pais</td><td>Manter pais informados sobre a semana</td><td>Toda sexta</td><td>Coordenação</td><td>Até 17h de sexta</td></tr>
+      <tr><td>Registro de visitas às salas</td><td>Documentar observações pedagógicas</td><td>2x por semana</td><td>Coordenação</td><td>Até final do dia</td></tr>
+    </table>
+
+    <h3 class="sub">🗓️ Atividades MENSAIS</h3>
+    <table>
+      <tr><th>Atividade</th><th>Objetivo</th><th>Prazo Ideal</th><th>Responsável</th><th>Método</th></tr>
+      <tr><td>Reunião pedagógica com todos os professores</td><td>Formação + alinhamento curricular</td><td>1ª ou 2ª sexta do mês</td><td>Coordenação</td><td>Ata + lista de presença</td></tr>
+      <tr><td>Relatório mensal de frequência</td><td>Identificar alunos em risco de reprovação por faltas</td><td>Até dia 5 do mês seguinte</td><td>Secretaria + Coordenação</td><td>Planilha Excel / sistema</td></tr>
+      <tr><td>Levantamento de notas parciais</td><td>Acompanhar desempenho antes do fechamento bimestral</td><td>Dia 20 de cada mês</td><td>Coordenação</td><td>Relatório do sistema de notas</td></tr>
+      <tr><td>Atendimento individual a professores</td><td>Feedback e acompanhamento docente</td><td>Durante o mês</td><td>Coordenação</td><td>Agenda + registro escrito</td></tr>
+      <tr><td>Checklist mensal de cumprimento do calendário</td><td>Garantir execução do planejado</td><td>Último dia do mês</td><td>Coordenação</td><td>Checklist impresso / digital</td></tr>
+      <tr><td>Envio de relatório à Direção</td><td>Transparência e prestação de contas</td><td>Até dia 3 do mês seguinte</td><td>Coordenação</td><td>Documento Word/PDF</td></tr>
+    </table>
+
+    <h3 class="sub">📊 Atividades BIMESTRAIS</h3>
+    <table>
+      <tr><th>Atividade</th><th>1º Bim.</th><th>2º Bim.</th><th>3º Bim.</th><th>4º Bim.</th><th>Responsável</th></tr>
+      <tr><td>Elaborar calendário de avaliações</td><td>Mar/wk3</td><td>Jun/wk2</td><td>Set/wk4</td><td>Nov/wk3</td><td>Coordenação</td></tr>
+      <tr><td>Supervisionar aplicação de provas</td><td>Mar/22-26</td><td>Jun/14-18</td><td>Set/22-26</td><td>Nov/17-21</td><td>Coordenação</td></tr>
+      <tr><td>Conselho de Classe</td><td>15/Abr</td><td>25/Jun</td><td>30/Set</td><td>26/Nov</td><td>Coord. + Professores</td></tr>
+      <tr><td>Entrega de Boletins / Reunião de Pais</td><td>30/Abr</td><td>30/Jun</td><td>01/Out</td><td>17/Dez</td><td>Coordenação + Secretaria</td></tr>
+      <tr><td>Formação Docente Bimestral</td><td>Mar</td><td>Jun</td><td>Ago</td><td>Nov</td><td>Coordenação</td></tr>
+      <tr><td>Relatório de desempenho por turma</td><td>Abr</td><td>Jul</td><td>Out</td><td>Dez</td><td>Coordenação</td></tr>
+      <tr><td>Recuperação bimestral</td><td>Abr</td><td>Jul</td><td>Out</td><td>Dez/wk1-2</td><td>Professores + Coord.</td></tr>
+    </table>
+
+    <h3 class="sub">📋 Atividades SEMESTRAIS</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>1º Semestre (Jan–Jun)</h4>
+        <ul>
+          <li>Semana Pedagógica (Janeiro) — planejamento anual</li>
+          <li>Rematrículas e matrículas novas (Janeiro)</li>
+          <li>Formação Docente de início de ano (Janeiro)</li>
+          <li>Reunião de apresentação com pais (Fevereiro)</li>
+          <li>Avaliação de desempenho dos professores (Junho)</li>
+          <li>Pesquisa de satisfação com pais e alunos (Junho)</li>
+          <li>Relatório semestral à Direção (Julho)</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>2º Semestre (Jul–Dez)</h4>
+        <ul>
+          <li>Semana Pedagógica de retorno (Julho)</li>
+          <li>Abertura do processo de rematrícula 2028 (Outubro)</li>
+          <li>Olimpíadas e feiras pedagógicas (Agosto-Outubro)</li>
+          <li>Avaliação de desempenho dos professores (Novembro)</li>
+          <li>Conselho Final de aprovação/retenção (Novembro)</li>
+          <li>Colação de Grau e Encerramento (Dezembro)</li>
+          <li>Reunião de avaliação do ano letivo (Dezembro)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">🏆 Atividades ANUAIS</h3>
+    <table>
+      <tr><th>Atividade</th><th>Período</th><th>Objetivo</th><th>Responsável</th></tr>
+      <tr><td>Elaboração do PPP (Projeto Político-Pedagógico)</td><td>Janeiro</td><td>Nortear toda a ação educativa do ano</td><td>Direção + Coordenação</td></tr>
+      <tr><td>Elaboração do Calendário Escolar Oficial</td><td>Janeiro (aprovação)</td><td>Definir todos os dias letivos e eventos</td><td>Coordenação + Direção</td></tr>
+      <tr><td>Definição de metas e indicadores anuais</td><td>Janeiro</td><td>Estabelecer parâmetros de sucesso</td><td>Direção + Coordenação</td></tr>
+      <tr><td>Feira de Ciências e Cultura CSP</td><td>Outubro</td><td>Integração curricular e protagonismo estudantil</td><td>Coordenação + Professores</td></tr>
+      <tr><td>Gincana / Olimpíadas Escolares CSP</td><td>Agosto-Setembro</td><td>Integração e espírito competitivo saudável</td><td>Coordenação + Ed. Física</td></tr>
+      <tr><td>Colação de Grau (9º ano e 3º EM)</td><td>Dezembro</td><td>Celebrar a conclusão de etapa dos alunos</td><td>Direção + Coordenação</td></tr>
+      <tr><td>Avaliação institucional do ano letivo</td><td>Dezembro</td><td>Lições aprendidas e planejamento 2028</td><td>Toda a equipe</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== FASE 4 — DASHBOARD ===================== -->
+<div class="section" id="fase4">
+  <div class="section-header">
+    <div class="icon">📈</div>
+    <div>
+      <h2>FASE 4 — Dashboard da Coordenação Pedagógica</h2>
+      <p>Painel de indicadores estratégicos para monitoramento contínuo do ano letivo</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">4</span> Indicadores Chave de Desempenho (KPIs) · CSP 2027</div>
+
+    <h3 class="sub">📊 Painel de Indicadores — Visão Geral</h3>
+    <div class="grid-4">
+      <div class="indicator-card">
+        <div class="indicator-value">95%</div>
+        <div class="indicator-label">Meta de Frequência</div>
+        <div class="indicator-meta">Mínimo aceitável: 75% (alunos)</div>
+      </div>
+      <div class="indicator-card verde">
+        <div class="indicator-value">7,0</div>
+        <div class="indicator-label">Média Geral Alunos</div>
+        <div class="indicator-meta">Meta: ≥ 7,0 por bimestre</div>
+      </div>
+      <div class="indicator-card amarelo">
+        <div class="indicator-value">100%</div>
+        <div class="indicator-label">Entrega de Notas</div>
+        <div class="indicator-meta">Todos os professores no prazo</div>
+      </div>
+      <div class="indicator-card verde">
+        <div class="indicator-value">200</div>
+        <div class="indicator-label">Dias Letivos</div>
+        <div class="indicator-meta">Mínimo legal obrigatório</div>
+      </div>
+    </div>
+
+    <h3 class="sub" style="margin-top:28px">📋 Definição Completa dos Indicadores</h3>
+    <table>
+      <tr><th>Indicador</th><th>Definição</th><th>Meta</th><th>Fórmula de Cálculo</th><th>Responsável</th><th>Periodicidade</th></tr>
+      <tr>
+        <td><strong>Frequência dos Alunos</strong></td>
+        <td>% de presença média de todos os alunos</td>
+        <td>≥ 90%</td>
+        <td>(Presenças / Aulas Dadas) × 100</td>
+        <td>Secretaria + Coord.</td>
+        <td>Semanal / Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Alunos em Risco (Frequência)</strong></td>
+        <td>Nº de alunos com frequência abaixo de 75%</td>
+        <td>0 alunos</td>
+        <td>Contagem de alunos com freq. &lt; 75%</td>
+        <td>Coordenação</td>
+        <td>Mensal</td>
+      </tr>
+      <tr>
+        <td><strong>Média Geral de Desempenho</strong></td>
+        <td>Média aritmética de todas as notas lançadas</td>
+        <td>≥ 7,0</td>
+        <td>Soma das médias / Nº de alunos</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>% de Alunos Abaixo da Média</strong></td>
+        <td>Proporção de alunos com média &lt; 5,0</td>
+        <td>≤ 10%</td>
+        <td>(Alunos &lt; 5,0 / Total) × 100</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Entrega de Notas no Prazo</strong></td>
+        <td>% de professores que lançaram notas até o prazo</td>
+        <td>100%</td>
+        <td>(Professores pontuais / Total) × 100</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Participação dos Pais nas Reuniões</strong></td>
+        <td>% de responsáveis presentes nas reuniões bimestrais</td>
+        <td>≥ 70%</td>
+        <td>(Presentes / Total famílias) × 100</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Cumprimento do Calendário</strong></td>
+        <td>% de eventos e atividades realizados conforme calendário</td>
+        <td>≥ 95%</td>
+        <td>(Realizados / Planejados) × 100</td>
+        <td>Coordenação</td>
+        <td>Mensal</td>
+      </tr>
+      <tr>
+        <td><strong>Dias Letivos Cumpridos</strong></td>
+        <td>Nº de dias letivos realizados até a data</td>
+        <td>200 ao final</td>
+        <td>Contagem acumulada no sistema</td>
+        <td>Secretaria</td>
+        <td>Semanal</td>
+      </tr>
+      <tr>
+        <td><strong>Taxa de Aprovação</strong></td>
+        <td>% de alunos aprovados ao final do ano letivo</td>
+        <td>≥ 90%</td>
+        <td>(Aprovados / Total matriculados) × 100</td>
+        <td>Coordenação</td>
+        <td>Anual</td>
+      </tr>
+      <tr>
+        <td><strong>Índice de Simulados Aplicados</strong></td>
+        <td>Nº de simulados realizados vs planejados</td>
+        <td>3 simulados/ano</td>
+        <td>Contagem de simulados aplicados</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Participação em Formação Docente</strong></td>
+        <td>% de professores presentes nas formações</td>
+        <td>≥ 90%</td>
+        <td>(Presentes / Total professores) × 100</td>
+        <td>Coordenação</td>
+        <td>Bimestral</td>
+      </tr>
+      <tr>
+        <td><strong>Índice de Projetos Concluídos</strong></td>
+        <td>% de projetos pedagógicos finalizados no prazo</td>
+        <td>≥ 85%</td>
+        <td>(Concluídos / Planejados) × 100</td>
+        <td>Coordenação</td>
+        <td>Semestral</td>
+      </tr>
+    </table>
+
+    <h3 class="sub">🎯 Semáforo de Alerta por Indicador</h3>
+    <div class="grid-3">
+      <div class="card vermelho">
+        <h4>🔴 ALERTA CRÍTICO — Ação Imediata</h4>
+        <ul>
+          <li>Frequência média abaixo de 80%</li>
+          <li>Mais de 20% dos alunos abaixo da média</li>
+          <li>Professor sem lançar notas após 5 dias do prazo</li>
+          <li>Reunião de pais com menos de 40% de presença</li>
+          <li>Dias letivos com déficit acumulado acima de 5 dias</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>🟡 ATENÇÃO — Monitoramento Reforçado</h4>
+        <ul>
+          <li>Frequência entre 80% e 89%</li>
+          <li>Entre 10% e 20% dos alunos abaixo da média</li>
+          <li>Professor com nota pendente até 3 dias após prazo</li>
+          <li>Participação de pais entre 40% e 69%</li>
+          <li>Déficit de 1 a 4 dias letivos</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>🟢 SITUAÇÃO NORMAL — Manutenção</h4>
+        <ul>
+          <li>Frequência ≥ 90%</li>
+          <li>Menos de 10% dos alunos abaixo da média</li>
+          <li>100% das notas lançadas no prazo</li>
+          <li>Participação de pais acima de 70%</li>
+          <li>Calendário em dia ou adiantado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FASE 5 — EXCEL ===================== -->
+<div class="section" id="fase5">
+  <div class="section-header">
+    <div class="icon">📊</div>
+    <div>
+      <h2>FASE 5 — Estrutura Profissional para Excel</h2>
+      <p>Especificação completa das 12 abas da planilha de gestão escolar CSP 2027</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">5</span> Planilha de Gestão CSP 2027 · 12 Abas Especializadas</div>
+
+    <div class="highlight-box">
+      <strong>💡 Como usar esta especificação:</strong> Crie um arquivo Excel chamado <code>GESTAO_CSP_2027.xlsx</code> com as 12 abas descritas abaixo. Cada aba possui objetivo, colunas, fórmulas e formatação condicional detalhados. Use as cores CSP: Azul <strong>#1B5CA8</strong> para cabeçalhos e Verde <strong>#7DC242</strong> para destaques.
+    </div>
+
+    <h3 class="sub">Aba 1 — Calendário Acadêmico 2027</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Objetivo</strong></td><td>Visão mensal do calendário com marcação de eventos, feriados e dias letivos</td></tr>
+      <tr><td><strong>Colunas</strong></td><td>Data | Dia da Semana | Tipo (Letivo/Feriado/Recesso/Evento) | Descrição | Bimestre | Observação</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=TEXTO(A2,"dddd") para dia da semana · =CONT.SE(C:C,"Letivo") para dias letivos · =SOMASE para contagem por tipo</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>Feriado → Fundo vermelho claro · Evento → Fundo azul claro · Recesso → Fundo lilás · Fim de semana → Cinza</td></tr>
+      <tr><td><strong>Validação</strong></td><td>Coluna Tipo: lista suspensa com opções predefinidas (Letivo, Feriado, Recesso, Evento, Avaliação, Formação)</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 2 — Eventos Escolares</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Nº | Nome do Evento | Data Início | Data Fim | Categoria | Responsável | Status | Observação</td></tr>
+      <tr><td><strong>Categorias</strong></td><td>Cultural · Esportivo · Pedagógico · Comemorativo · Institucional · Externo</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=DIAS(D2,C2)+1 para duração · =CONT.SE(F:F,"Realizado") para eventos concluídos</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>Status "Realizado" → verde · "Em andamento" → amarelo · "Cancelado" → vermelho tachado · "Planejado" → azul claro</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 3 — Reuniões Pedagógicas</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Data | Horário | Pauta | Participantes | Presentes | % Presença | Decisões | Próxima Data | Ata (link)</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=(E2/D2)*100 para % de presença · =MÉDIA(F:F) para média de participação</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>% Presença &lt;70% → vermelho · 70-89% → amarelo · ≥90% → verde</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 4 — Reuniões com Pais</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Data | Bimestre | Turma | Nº Famílias Convocadas | Nº Presentes | % Presença | Principais Pautas | Pendências</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=(E2/D2)*100 para % presença · Gráfico de barras por turma · MÁXIMO e MÍNIMO por turma</td></tr>
+      <tr><td><strong>Automatização</strong></td><td>Tabela dinâmica por bimestre para comparar participação ao longo do ano</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 5 — Conselhos de Classe</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Data | Bimestre | Turma | Professores Presentes | Alunos em Destaque | Alunos em Risco | Encaminhamentos | Prazo | Responsável | Status</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=CONT.SE(J:J,"Concluído") · Alertas automáticos de prazo com =SE(HOJE()>H2,"VENCIDO","OK")</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 6 — Avaliações</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Bimestre | Série/Turma | Disciplina | Data Aplicação | Data Devolução | Nº Aplicados | Média | % Abaixo 5,0 | % Acima 7,0 | Observação</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=MÉDIA(G:G) por disciplina · =CONT.SE por intervalo de nota · Gráfico de linha de evolução bimestral</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>Média &lt;5 → vermelho · 5,0-6,9 → amarelo · ≥7,0 → verde</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 7 — Simulados</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Simulado Nº | Data | Turmas | Nº Participantes | Média Geral | Média por Área (CN/CH/LC/MT) | Meta | Variação vs Anterior | Observação</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=H2-H1 para variação · Gráfico radar por área do conhecimento · =SE(E2>=F2,"META ATINGIDA","ABAIXO")</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 8 — Projetos Pedagógicos</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Projeto | Objetivos | Disciplinas Envolvidas | Turmas | Responsável | Início | Fim | Status | % Conclusão | Resultado</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>Barra de progresso com formatação condicional (ícone de porcentagem) · =CONT.SE(H:H,"Concluído")</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 9 — Formação Docente</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Data | Tema | Formador | Carga Horária | Professores Convidados | Presentes | % Presença | Avaliação Média (0-10) | Aplicação Prevista</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=SOMA(D:D) para total de horas · =MÉDIA(H:H) para satisfação média · Gráfico de avaliação por formação</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 10 — Checklist Mensal</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Atividade | Categoria | Mês | Prazo | Responsável | Concluído (S/N) | Data de Conclusão | Observação</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=CONT.SE(F:F,"S")/CONT.SE(F:F,"&lt;&gt;") para % de conclusão · Alertas de prazo com TODAY()</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>"S" concluído → linha verde · prazo vencido e não concluído → linha vermelha piscante</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 11 — Prazos Importantes</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Colunas</strong></td><td>Prazo | Atividade | Prioridade | Responsável | Dias Restantes | Status | Observação</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>=A2-HOJE() para dias restantes · =SE(E2&lt;0,"VENCIDO",SE(E2&lt;=7,"URGENTE","OK"))</td></tr>
+      <tr><td><strong>Format. Condicional</strong></td><td>Vencido → vermelho · 1-7 dias → laranja · 8-15 dias → amarelo · &gt;15 dias → verde</td></tr>
+      <tr><td><strong>Ordenação</strong></td><td>Ordenar por dias restantes (crescente) · Filtro por responsável e prioridade</td></tr>
+    </table>
+
+    <h3 class="sub">Aba 12 — Dashboard (Painel Executivo)</h3>
+    <table>
+      <tr><th>Item</th><th>Especificação</th></tr>
+      <tr><td><strong>Objetivo</strong></td><td>Visão consolidada de todos os indicadores em uma única tela — atualização automática</td></tr>
+      <tr><td><strong>Elementos</strong></td><td>Cards de KPIs com valores atuais · Gráfico de linha de frequência mensal · Gráfico de barras de desempenho por turma · Gráfico de pizza de eventos realizados vs planejados · Tabela de alertas (prazos vencidos e urgentes)</td></tr>
+      <tr><td><strong>Fórmulas</strong></td><td>Todas as células do Dashboard buscam dados das abas anteriores via referências diretas (ex: =Frequência!B2) · Nenhum dado é inserido manualmente nesta aba</td></tr>
+      <tr><td><strong>Atualização</strong></td><td>Automática ao atualizar as abas fonte · Botão macro opcional: "Atualizar Tudo" via VBA</td></tr>
+      <tr><td><strong>Impressão</strong></td><td>Configurar para impressão em A4 paisagem · Área de impressão delimitada · Cabeçalho com logo CSP</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===================== FASE 6 — NOTION ===================== -->
+<div class="section" id="fase6">
+  <div class="section-header">
+    <div class="icon">💡</div>
+    <div>
+      <h2>FASE 6 — Estrutura Completa para Notion</h2>
+      <p>Workspace digital completo para gestão pedagógica e administrativa da Coordenação CSP</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">6</span> Notion Workspace · Colégio São Paulo 2027</div>
+
+    <div class="highlight-box">
+      <strong>🗂️ Estrutura do Workspace:</strong> Crie um Workspace chamado <strong>"CSP 2027 — Coordenação Pedagógica"</strong> no Notion. Organize em páginas principais (listadas abaixo), cada uma com bancos de dados, visualizações e relacionamentos cruzados.
+    </div>
+
+    <h3 class="sub">📌 Página 1 — Dashboard Principal (Home)</h3>
+    <div class="card">
+      <h4>Estrutura</h4>
+      <ul>
+        <li><strong>Cabeçalho:</strong> Logo CSP (imagem) + título "Coordenação Pedagógica 2027"</li>
+        <li><strong>Seção "Esta Semana":</strong> Linked view filtrada por semana atual (Reuniões + Eventos + Prazos)</li>
+        <li><strong>Seção "Alertas":</strong> Tarefas vencidas e prazos críticos (filtro: status ≠ Concluído AND data &lt; hoje)</li>
+        <li><strong>Seção "Calendário do Mês":</strong> Visualização Calendar do banco de Eventos filtrada pelo mês atual</li>
+        <li><strong>Seção "Indicadores Rápidos":</strong> Callouts coloridos com métricas chave atualizadas manualmente a cada semana</li>
+        <li><strong>Atalhos rápidos:</strong> Links para os 8 bancos de dados principais</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">📅 Página 2 — Calendário Geral 2027</h3>
+    <table>
+      <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td>Nome</td><td>Título</td><td>Nome do evento/dia especial</td></tr>
+      <tr><td>Data</td><td>Data (com hora)</td><td>Data e horário do evento</td></tr>
+      <tr><td>Tipo</td><td>Select</td><td>Feriado · Evento · Avaliação · Formação · Administrativo · Recesso</td></tr>
+      <tr><td>Bimestre</td><td>Select</td><td>1º · 2º · 3º · 4º · Pré-ano · Pós-ano</td></tr>
+      <tr><td>Responsável</td><td>Person</td><td>Membro da equipe responsável</td></tr>
+      <tr><td>Status</td><td>Select</td><td>Planejado · Em andamento · Realizado · Cancelado</td></tr>
+      <tr><td>Descrição</td><td>Text</td><td>Detalhes do evento</td></tr>
+    </table>
+    <div class="card" style="margin-top:12px">
+      <h4>Visualizações Recomendadas</h4>
+      <ul>
+        <li><strong>Calendar:</strong> Visão mensal padrão — cor por tipo de evento</li>
+        <li><strong>Timeline:</strong> Visão de linha do tempo — planejamento de longo prazo</li>
+        <li><strong>Table:</strong> Lista completa com filtros por bimestre e tipo</li>
+        <li><strong>Board (Kanban):</strong> Agrupado por status — controle de execução</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">📝 Página 3 — Banco de Reuniões</h3>
+    <table>
+      <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td>Nome/Pauta</td><td>Título</td><td>Assunto principal da reunião</td></tr>
+      <tr><td>Tipo</td><td>Select</td><td>Pedagógica · Com Pais · Diretiva · Conselho de Classe · Formação</td></tr>
+      <tr><td>Data e Hora</td><td>Data</td><td>Agendamento completo</td></tr>
+      <tr><td>Participantes</td><td>Multi-select</td><td>Grupos presentes (Professores / Pais / Direção / Coordenação)</td></tr>
+      <tr><td>% Presença</td><td>Number (%)</td><td>Presença registrada pós-reunião</td></tr>
+      <tr><td>Decisões</td><td>Text</td><td>Encaminhamentos e decisões tomadas</td></tr>
+      <tr><td>Ata</td><td>File / Link</td><td>Documento de ata da reunião</td></tr>
+      <tr><td>Próxima Reunião</td><td>Date</td><td>Data da próxima reunião do mesmo tipo</td></tr>
+      <tr><td>Bimestre</td><td>Relation</td><td>Relacionado ao Calendário Geral</td></tr>
+    </table>
+
+    <h3 class="sub">🔬 Página 4 — Banco de Projetos Pedagógicos</h3>
+    <table>
+      <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td>Nome do Projeto</td><td>Título</td><td>Nome oficial do projeto</td></tr>
+      <tr><td>Objetivo</td><td>Text</td><td>Justificativa e metas do projeto</td></tr>
+      <tr><td>Disciplinas</td><td>Multi-select</td><td>Áreas do conhecimento envolvidas</td></tr>
+      <tr><td>Turmas</td><td>Multi-select</td><td>Séries e turmas participantes</td></tr>
+      <tr><td>Período</td><td>Date range</td><td>Data início e fim do projeto</td></tr>
+      <tr><td>Responsável</td><td>Person</td><td>Professor ou coordenador responsável</td></tr>
+      <tr><td>Status</td><td>Select</td><td>Planejamento · Em execução · Concluído · Suspenso</td></tr>
+      <tr><td>Progresso</td><td>Number (%)</td><td>% de conclusão estimado</td></tr>
+      <tr><td>Resultado</td><td>Select</td><td>Excelente · Bom · Regular · Insatisfatório</td></tr>
+      <tr><td>Materiais</td><td>Files</td><td>Plano, fotos, trabalhos dos alunos</td></tr>
+    </table>
+
+    <h3 class="sub">📊 Página 5 — Banco de Avaliações e Simulados</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Propriedades — Avaliações</h4>
+        <ul>
+          <li>Nome da Avaliação (Título)</li>
+          <li>Bimestre (Select)</li>
+          <li>Disciplina (Select)</li>
+          <li>Turma (Multi-select)</li>
+          <li>Data de Aplicação (Date)</li>
+          <li>Data de Devolução (Date)</li>
+          <li>Média da Turma (Number)</li>
+          <li>% Abaixo 5,0 (Number %)</li>
+          <li>Observações (Text)</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>Propriedades — Simulados</h4>
+        <ul>
+          <li>Simulado Nº (Título)</li>
+          <li>Data (Date)</li>
+          <li>Turmas (Multi-select)</li>
+          <li>Nº Participantes (Number)</li>
+          <li>Média Geral (Number)</li>
+          <li>Média CN / CH / LC / MT (Number)</li>
+          <li>Meta (Number)</li>
+          <li>Variação vs Anterior (Formula)</li>
+          <li>Status (Select)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">👩‍🏫 Página 6 — Banco de Formação Docente</h3>
+    <table>
+      <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td>Tema da Formação</td><td>Título</td><td>Assunto da formação</td></tr>
+      <tr><td>Data</td><td>Date</td><td>Data e horário</td></tr>
+      <tr><td>Formador</td><td>Text</td><td>Nome do facilitador / empresa</td></tr>
+      <tr><td>Carga Horária</td><td>Number</td><td>Horas de formação</td></tr>
+      <tr><td>Presentes</td><td>Number</td><td>Nº de professores presentes</td></tr>
+      <tr><td>% Presença</td><td>Formula</td><td>Presentes / Total professores × 100</td></tr>
+      <tr><td>Avaliação</td><td>Number (1-10)</td><td>Nota média dos participantes</td></tr>
+      <tr><td>Aplicação em Sala</td><td>Select</td><td>Sim · Parcial · Não aplicado</td></tr>
+      <tr><td>Material</td><td>Files</td><td>Slides, apostilas, atas</td></tr>
+    </table>
+
+    <h3 class="sub">👨‍👩‍👧 Página 7 — Comunicação com Pais</h3>
+    <table>
+      <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td>Assunto</td><td>Título</td><td>Tema do comunicado ou atendimento</td></tr>
+      <tr><td>Tipo</td><td>Select</td><td>Reunião · Comunicado · Atendimento individual · Pesquisa de satisfação</td></tr>
+      <tr><td>Data</td><td>Date</td><td>Data do contato</td></tr>
+      <tr><td>Turma Alvo</td><td>Multi-select</td><td>Turmas envolvidas</td></tr>
+      <tr><td>Canal</td><td>Select</td><td>Presencial · WhatsApp · E-mail · Agenda · App escolar</td></tr>
+      <tr><td>Alcance</td><td>Number</td><td>Nº de famílias impactadas</td></tr>
+      <tr><td>Retorno</td><td>Select</td><td>Ótimo · Bom · Indiferente · Negativo</td></tr>
+      <tr><td>Pendências</td><td>Text</td><td>Ações decorrentes do contato</td></tr>
+    </table>
+
+    <div class="highlight-box" style="margin-top:20px">
+      <strong>🔗 Relacionamentos Chave no Notion:</strong><br>
+      · Reuniões ↔ Calendário (reunião vinculada à data no calendário)<br>
+      · Projetos ↔ Formação (formações que embasam os projetos)<br>
+      · Avaliações ↔ Calendário (provas aparecem no calendário geral)<br>
+      · Comunicação com Pais ↔ Reuniões (reuniões geram comunicados)<br>
+      Use a propriedade <strong>Relation</strong> do Notion para criar esses vínculos.
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FASE 7 — CHECKLISTS ===================== -->
+<div class="section" id="fase7">
+  <div class="section-header">
+    <div class="icon">✅</div>
+    <div>
+      <h2>FASE 7 — Checklists da Coordenadora</h2>
+      <p>Listas de verificação para controle diário, semanal, mensal, bimestral, semestral e anual</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">7</span> Checklists Operacionais · Coordenação CSP 2027</div>
+
+    <div class="grid-2">
+
+      <div>
+        <h3 class="sub">☀️ Checklist DIÁRIO</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Verificar presença de professores e providenciar substituições</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar frequência das turmas no sistema</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Checar e-mails e responder comunicações urgentes</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Circular pelas salas (mínimo 2 visitas/dia)</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Registrar ocorrências disciplinares e pedagógicas</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Atender pais e responsáveis (quando necessário)</span><span class="tag tag-complementar">Complementar</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar comunicados e recados no mural</span><span class="tag tag-complementar">Complementar</span></li>
+          <li><div class="check-box"></div><span class="text">Atualizar agenda da coordenação para o dia seguinte</span><span class="tag tag-complementar">Complementar</span></li>
+        </ul>
+
+        <h3 class="sub" style="margin-top:24px">📅 Checklist SEMANAL</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Reunião de alinhamento com a Direção (2ª feira)</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar e dar feedback sobre planos de aula</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Atualizar painel de indicadores (frequência e notas)</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Enviar comunicado semanal às famílias</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar alunos com falta acima de 20% no bimestre</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Registrar observações de sala de aula</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Conferir próximos eventos e preparar materiais</span><span class="tag tag-complementar">Complementar</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="sub">🗓️ Checklist MENSAL</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Realizar reunião pedagógica com professores</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Gerar relatório de frequência mensal</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar notas parciais lançadas no sistema</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Realizar atendimento individual a professores que necessitam</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Atualizar checklist e plano de ação mensal</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Enviar relatório mensal à Direção</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Verificar cumprimento dos dias letivos</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Planejar atividades e projetos do próximo mês</span><span class="tag tag-complementar">Complementar</span></li>
+          <li><div class="check-box"></div><span class="text">Checar material didático e recursos necessários</span><span class="tag tag-complementar">Complementar</span></li>
+        </ul>
+
+        <h3 class="sub" style="margin-top:24px">📊 Checklist BIMESTRAL</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Elaborar e divulgar calendário de provas do bimestre</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Supervisionar aplicação e devolução das avaliações</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Cobrar lançamento de notas no prazo</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Realizar Conselho de Classe</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Organizar entrega de boletins / reunião de pais</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Identificar alunos em recuperação e notificar famílias</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Realizar formação docente bimestral</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Gerar relatório de desempenho por turma e disciplina</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Atualizar dashboard de indicadores</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Avaliar projetos pedagógicos em andamento</span><span class="tag tag-complementar">Complementar</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:24px">
+      <div>
+        <h3 class="sub">📋 Checklist SEMESTRAL</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Avaliação de desempenho formal dos professores</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Pesquisa de satisfação com pais e alunos</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Revisão e ajuste do PPP e planos de ensino</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Semana Pedagógica de planejamento (2º semestre)</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Relatório semestral à Direção</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Revisão de projetos e eventos para o semestre seguinte</span><span class="tag tag-complementar">Complementar</span></li>
+          <li><div class="check-box"></div><span class="text">Balanço de dias letivos e reposições necessárias</span><span class="tag tag-critico">Crítico</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">🏆 Checklist ANUAL</h3>
+        <ul class="checklist">
+          <li><div class="check-box"></div><span class="text">Elaborar PPP e Calendário Escolar 2027 (Janeiro)</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Conduzir Semana Pedagógica de início de ano</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Validar planos de ensino de todos os professores</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Gerenciar processo de matrículas e rematrículas</span><span class="tag tag-critico">Crítico</span></li>
+          <li><div class="check-box"></div><span class="text">Realizar 3 simulados ENEM ao longo do ano</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Organizar Feira de Ciências e Cultura CSP</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Organizar Colação de Grau (Dezembro)</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Realizar avaliação institucional do ano letivo</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Elaborar relatório anual de resultados</span><span class="tag tag-importante">Importante</span></li>
+          <li><div class="check-box"></div><span class="text">Planejamento preliminar do ano letivo 2028</span><span class="tag tag-complementar">Complementar</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FASE 8 — GESTÃO DE RISCOS ===================== -->
+<div class="section" id="fase8">
+  <div class="section-header">
+    <div class="icon">⚠️</div>
+    <div>
+      <h2>FASE 8 — Gestão de Riscos e Prevenção de Problemas</h2>
+      <p>Principais riscos da coordenação escolar, causas, consequências e planos de ação preventiva</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">8</span> Mapa de Riscos · Coordenação Pedagógica CSP 2027</div>
+
+    <table>
+      <tr>
+        <th>Risco</th><th>Probabilidade</th><th>Causa Principal</th><th>Consequência</th><th>Solução Preventiva</th><th>Ferramenta de Controle</th>
+      </tr>
+      <tr class="risk-alto">
+        <td><strong>Atraso na entrega de notas pelos professores</strong></td>
+        <td><span class="tag tag-critico">🔴 Alto</span></td>
+        <td>Falta de prazo claro, acúmulo de trabalho no final do bimestre, procrastinação</td>
+        <td>Atraso no Conselho de Classe, boletins atrasados, tensão com pais</td>
+        <td>Definir datas formais 30 dias antes · Enviar lembretes semanais na semana do fechamento · Criar lista de controle de lançamento</td>
+        <td>Planilha Excel Aba 10 · Alerta automático no sistema de notas</td>
+      </tr>
+      <tr class="risk-alto">
+        <td><strong>Conflito de datas entre eventos e avaliações</strong></td>
+        <td><span class="tag tag-critico">🔴 Alto</span></td>
+        <td>Planejamento não integrado, adição de eventos sem consultar o calendário</td>
+        <td>Sobrecarga de alunos e professores, baixo desempenho, estresse geral</td>
+        <td>Calendário único centralizado · Reunião de planejamento anual em janeiro · Regra: nenhum evento na semana de provas</td>
+        <td>Calendário Notion / Excel · Reunião semanal de alinhamento</td>
+      </tr>
+      <tr class="risk-alto">
+        <td><strong>Baixa participação dos pais nas reuniões</strong></td>
+        <td><span class="tag tag-critico">🔴 Alto</span></td>
+        <td>Convocação com pouca antecedência, horários incompatíveis com o trabalho dos pais</td>
+        <td>Falta de alinhamento família-escola, alunos sem suporte em casa</td>
+        <td>Convocar com mínimo 15 dias de antecedência · Oferecer horários alternativos (manhã E tarde) · Comunicação multicanal (WhatsApp + e-mail + agenda)</td>
+        <td>Aba "Reuniões com Pais" no Excel · Controle de % presença</td>
+      </tr>
+      <tr class="risk-medio">
+        <td><strong>Acúmulo de atividades em períodos de avaliação</strong></td>
+        <td><span class="tag tag-importante">🟡 Médio</span></td>
+        <td>Falta de distribuição equilibrada do calendário</td>
+        <td>Queda no desempenho geral, professores e alunos sobrecarregados</td>
+        <td>Semanas de prova são "semanas protegidas" — sem novos eventos · Distribuir atividades com antecedência · Usar cores no calendário para identificar sobreposições</td>
+        <td>Calendário visual mensal · Reunião de planejamento bimestral</td>
+      </tr>
+      <tr class="risk-medio">
+        <td><strong>Falhas de comunicação com professores</strong></td>
+        <td><span class="tag tag-importante">🟡 Médio</span></td>
+        <td>Informações dadas apenas verbalmente, ausência de registro</td>
+        <td>Desentendimentos, retrabalho, professores mal informados</td>
+        <td>Toda decisão pedagógica registrada em ata · Grupo de WhatsApp oficial da equipe docente · Comunicados formais para mudanças no calendário</td>
+        <td>Livro de Atas digital · Notion Banco de Reuniões</td>
+      </tr>
+      <tr class="risk-medio">
+        <td><strong>Não cumprimento dos 200 dias letivos</strong></td>
+        <td><span class="tag tag-importante">🟡 Médio</span></td>
+        <td>Feriados não previstos, greves, paralisações, eventos que tomam aulas</td>
+        <td>Irregularidade legal, necessidade de reposição emergencial, conflito com férias</td>
+        <td>Controle semanal de dias letivos cumpridos · Reserva de datas para reposição no calendário · Planejamento conservador com folga de 5-8 dias</td>
+        <td>Aba "Calendário 2027" no Excel · Contador de dias letivos</td>
+      </tr>
+      <tr class="risk-medio">
+        <td><strong>Alunos com alto índice de faltas sem intervenção</strong></td>
+        <td><span class="tag tag-importante">🟡 Médio</span></td>
+        <td>Falta de monitoramento sistemático, notificação tardia aos pais</td>
+        <td>Reprovação por frequência, evasão escolar</td>
+        <td>Alerta automático quando aluno atinge 15% de faltas · Notificação imediata aos pais · Entrevista com o aluno e família</td>
+        <td>Sistema de gestão escolar · Relatório mensal de frequência</td>
+      </tr>
+      <tr class="risk-baixo">
+        <td><strong>Esquecimento de prazos importantes</strong></td>
+        <td><span class="tag tag-complementar">🟢 Baixo</span></td>
+        <td>Agenda desorganizada, múltiplas demandas simultâneas</td>
+        <td>Perda de prazo legal, insatisfação de pais e direção</td>
+        <td>Usar Aba "Prazos Importantes" no Excel com alertas · Configurar lembretes no Google Calendar · Dashboard semanal com prazos dos próximos 15 dias</td>
+        <td>Excel Aba 11 · Google Calendar · Notion Dashboard</td>
+      </tr>
+      <tr class="risk-baixo">
+        <td><strong>Sobrecarga da coordenadora</strong></td>
+        <td><span class="tag tag-complementar">🟢 Baixo</span></td>
+        <td>Ausência de delegação, acúmulo de funções administrativas e pedagógicas</td>
+        <td>Esgotamento, queda na qualidade do trabalho, erros e omissões</td>
+        <td>Mapear tarefas delegáveis à secretaria e professores líderes · Reservar 2h semanais para planejamento pessoal · Limitar reuniões a no máximo 3 por semana</td>
+        <td>Cronograma pessoal semanal · Agenda bloqueada para planejamento</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== FASE 9 — MANUAL ===================== -->
+<div class="section" id="fase9">
+  <div class="section-header">
+    <div class="icon">📖</div>
+    <div>
+      <h2>FASE 9 — Manual de Utilização do Sistema</h2>
+      <p>Guia prático para uso cotidiano do Sistema de Gestão Escolar CSP 2027</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="phase-badge"><span class="num">9</span> Manual da Coordenadora · CSP 2027</div>
+
+    <h3 class="sub">📅 Como Utilizar o Calendário Acadêmico</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Rotina com o Calendário</h4>
+        <ul>
+          <li><strong>Todo início de mês:</strong> Imprima o mês atual e afixe na coordenação e sala dos professores</li>
+          <li><strong>Toda segunda-feira:</strong> Verifique os eventos da semana e prepare o necessário</li>
+          <li><strong>Alterações:</strong> Comunique qualquer mudança com mínimo 5 dias de antecedência</li>
+          <li><strong>Versão digital:</strong> Mantenha o calendário sempre atualizado no Notion/Excel</li>
+          <li><strong>Conflitos:</strong> Use a regra — avaliações têm prioridade sobre eventos culturais</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>Prioridade de Eventos</h4>
+        <ul>
+          <li>🔴 <strong>Feriados nacionais:</strong> Imutáveis — não marcar nada</li>
+          <li>🔴 <strong>Conselho de Classe:</strong> Não pode ser cancelado ou adiado</li>
+          <li>🟡 <strong>Reunião de pais:</strong> Pode ser reagendada (máximo 1 semana)</li>
+          <li>🟡 <strong>Formação docente:</strong> Pode ser reorganizada dentro do bimestre</li>
+          <li>🟢 <strong>Eventos culturais:</strong> Flexíveis, mas com 15 dias de aviso</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">📊 Como Utilizar o Excel</h3>
+    <table>
+      <tr><th>Situação</th><th>Ação</th><th>Aba do Excel</th></tr>
+      <tr><td>Início de cada mês</td><td>Preencher checklist mensal e verificar prazos do mês</td><td>Aba 10 (Checklist) + Aba 11 (Prazos)</td></tr>
+      <tr><td>Após cada avaliação</td><td>Lançar médias, % abaixo de 5, observações</td><td>Aba 6 (Avaliações)</td></tr>
+      <tr><td>Após cada reunião pedagógica</td><td>Registrar data, presentes, decisões, próxima reunião</td><td>Aba 3 (Reuniões Pedagógicas)</td></tr>
+      <tr><td>Após reunião de pais</td><td>Registrar presença por turma e pendências</td><td>Aba 4 (Reuniões com Pais)</td></tr>
+      <tr><td>Após Conselho de Classe</td><td>Registrar alunos em destaque, em risco, encaminhamentos</td><td>Aba 5 (Conselhos de Classe)</td></tr>
+      <tr><td>Toda semana (sexta-feira)</td><td>Atualizar Dashboard com novos dados</td><td>Aba 12 (Dashboard)</td></tr>
+      <tr><td>Após simulado</td><td>Lançar médias por área e comparar com meta</td><td>Aba 7 (Simulados)</td></tr>
+    </table>
+
+    <h3 class="sub">💡 Como Utilizar o Notion</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Fluxo de Trabalho Diário no Notion</h4>
+        <ul>
+          <li><strong>Ao chegar:</strong> Abrir Dashboard Principal e verificar alertas do dia</li>
+          <li><strong>Ao planejar evento:</strong> Cadastrar no Banco de Eventos → vincula automaticamente ao calendário</li>
+          <li><strong>Após reunião:</strong> Criar registro no Banco de Reuniões com ata e decisões</li>
+          <li><strong>Novo projeto:</strong> Criar página no Banco de Projetos com todos os campos preenchidos</li>
+          <li><strong>Ao fechar o dia:</strong> Atualizar status das atividades em andamento</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>Boas Práticas no Notion</h4>
+        <ul>
+          <li>Nunca deixe o campo "Status" em branco — sempre indique o estágio atual</li>
+          <li>Use a visualização Calendar para ver conflitos de datas rapidamente</li>
+          <li>Adicione comentários nos registros para contextualizar decisões</li>
+          <li>Arquive (não delete) itens concluídos — eles servem como histórico</li>
+          <li>Faça backup mensal: exportar como PDF ou Markdown</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">🔄 Como Manter a Organização Durante o Ano</h3>
+    <div class="grid-3">
+      <div class="card vermelho">
+        <h4>Janeiro — Configuração</h4>
+        <ul>
+          <li>Preencher todo o calendário 2027 no Excel e Notion</li>
+          <li>Criar todas as abas da planilha</li>
+          <li>Definir metas dos indicadores do Dashboard</li>
+          <li>Imprimir o calendário anual e afixar na coordenação</li>
+        </ul>
+      </div>
+      <div class="card amarelo">
+        <h4>Ao longo do ano — Manutenção</h4>
+        <ul>
+          <li>Atualizar planilha toda sexta-feira (30 min)</li>
+          <li>Revisar Notion toda segunda-feira (15 min)</li>
+          <li>Nunca acumular registro por mais de 1 semana</li>
+          <li>Comunicar alterações no calendário imediatamente</li>
+        </ul>
+      </div>
+      <div class="card verde">
+        <h4>Dezembro — Encerramento</h4>
+        <ul>
+          <li>Fazer backup completo de todos os arquivos</li>
+          <li>Gerar relatório anual consolidado (PDF)</li>
+          <li>Arquivar no Drive/OneDrive na pasta "CSP 2027"</li>
+          <li>Iniciar planilha e Notion 2028 com os dados do ano</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">📌 Reuniões de Acompanhamento — Pauta Modelo</h3>
+    <table>
+      <tr><th>Tipo de Reunião</th><th>Frequência</th><th>Duração</th><th>Pauta Fixa</th></tr>
+      <tr>
+        <td><strong>Alinhamento Diretivo</strong></td><td>Semanal (2ª)</td><td>45 min</td>
+        <td>1. Informes urgentes · 2. Revisão de eventos da semana · 3. Indicadores de alerta · 4. Decisões pendentes</td>
+      </tr>
+      <tr>
+        <td><strong>Reunião Pedagógica</strong></td><td>Mensal</td><td>2h</td>
+        <td>1. Formação temática (45 min) · 2. Análise de desempenho · 3. Projetos em andamento · 4. Encaminhamentos · 5. Próximos eventos</td>
+      </tr>
+      <tr>
+        <td><strong>Conselho de Classe</strong></td><td>Bimestral</td><td>3h</td>
+        <td>1. Apresentação de resultados por turma · 2. Alunos em destaque · 3. Alunos em risco · 4. Estratégias de recuperação · 5. Encaminhamentos individuais</td>
+      </tr>
+      <tr>
+        <td><strong>Reunião de Pais</strong></td><td>Bimestral</td><td>1h30</td>
+        <td>1. Entrega e explicação do boletim · 2. Informes pedagógicos · 3. Próximos eventos · 4. Espaço para dúvidas · 5. Atendimentos individuais (pós-reunião)</td>
+      </tr>
+    </table>
+
+    <div class="highlight-box" style="margin-top:24px">
+      <strong>🎯 Princípio Fundamental do Sistema CSP:</strong><br>
+      Um sistema de gestão só funciona se for usado consistentemente. Reserve <strong>1 hora às sextas-feiras</strong> exclusivamente para atualizar registros, rever indicadores e planejar a semana seguinte. Esta hora semanal de gestão evita acúmulo, previne crises e mantém o controle pedagógico durante todo o ano letivo 2027.
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer style="background:var(--azul-escuro);color:white;text-align:center;padding:20px;font-size:12px;margin-top:20px;">
+  <strong>Colégio São Paulo — CSP</strong> · Sistema de Gestão Escolar 2027 · Coordenação Pedagógica<br>
+  <span style="opacity:0.6">Documento de uso interno · Versão 1.0 · 2027</span>
+</footer>
+
+</body>
+</html>
