@@ -33,11 +33,14 @@ export default function Equipe() {
   async function saveUser() {
     if (!form.email || !form.nome) return;
     setSaving(true); setError('');
-    const { error: err } = await supabase.auth.admin.inviteUserByEmail(form.email, {
-      data: { nome: form.nome, role: form.role }
+    const res = await fetch('/api/invite-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: form.email, nome: form.nome, role: form.role })
     });
-    if (err) {
-      setError('Erro ao convidar usuário. Verifique se o e-mail já está cadastrado ou use o painel do Supabase para criar usuários.');
+    const data = await res.json();
+    if (!res.ok) {
+      setError('Erro ao convidar: ' + data.error);
     } else {
       setMsg('Convite enviado para ' + form.email);
       setShowModal(false);
@@ -59,11 +62,6 @@ export default function Equipe() {
 
   return (
     <Layout title="Equipe" subtitle="Gerenciamento de usuários do sistema CSP 2027">
-      <div className="alert alert-info" style={{ marginBottom: '20px' }}>
-        <span>ℹ️</span>
-        <div>Para adicionar novos usuários, o administrador deve acessar o <strong>Painel do Supabase → Authentication → Users → Invite</strong> e informar o e-mail e o papel (role) nos metadados.</div>
-      </div>
-
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
         <span style={{ fontSize: '13px', color: 'var(--cinza-texto)' }}>{equipe.length} membro(s) na equipe</span>
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>+ Convidar Usuário</button>
