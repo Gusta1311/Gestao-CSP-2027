@@ -134,23 +134,42 @@ export default function Calendario() {
   function getLegendaDoMes(mesIdx) {
     const y = 2027;
     const items = [];
-    const seen = new Set();
 
+    // Agrupa feriados pelo nome e monta range de datas
+    const feriadosPorNome = {};
     Object.keys(FERIADOS_2027).forEach(k => {
       const [ky, km] = k.split('-');
       if (parseInt(ky) === y && parseInt(km) - 1 === mesIdx) {
-        const key = '#E53935|Feriado';
-        if (!seen.has(key)) { seen.add(key); items.push({ cor: '#E53935', nome: 'Feriado', data: k }); }
+        const nome = FERIADOS_2027[k];
+        if (!feriadosPorNome[nome]) feriadosPorNome[nome] = [];
+        feriadosPorNome[nome].push(k);
       }
     });
+    Object.entries(feriadosPorNome).forEach(([nome, datas]) => {
+      datas.sort();
+      items.push({
+        cor: '#E53935',
+        nome,
+        data: datas[0],
+        dataFim: datas.length > 1 ? datas[datas.length - 1] : null,
+      });
+    });
 
+    // Eventos cadastrados (sem duplicar o mesmo evento)
+    const eventosSeen = new Set();
     Object.keys(eventos).forEach(k => {
       const [ky, km] = k.split('-');
       if (parseInt(ky) === y && parseInt(km) - 1 === mesIdx) {
         eventos[k].forEach(ev => {
-          const cor = ev.cor || '#1B5CA8';
-          const key = `${cor}|${ev.nome}`;
-          if (!seen.has(key)) { seen.add(key); items.push({ cor, nome: ev.nome, data: k }); }
+          if (!eventosSeen.has(ev.id)) {
+            eventosSeen.add(ev.id);
+            items.push({
+              cor: ev.cor || '#1B5CA8',
+              nome: ev.nome,
+              data: ev.data_inicio || k,
+              dataFim: ev.data_fim && ev.data_fim !== ev.data_inicio ? ev.data_fim : null,
+            });
+          }
         });
       }
     });
@@ -236,7 +255,9 @@ export default function Calendario() {
                   {legenda.map((item, i) => (
                     <div key={i} className="cal-legenda-item">
                       <div className="cal-legenda-dot" style={{ background: item.cor }} />
-                      <span style={{ color: 'var(--cinza-texto)', marginRight: '3px' }}>{fmtDateBR(item.data)}</span>
+                      <span style={{ color: 'var(--cinza-texto)', marginRight: '3px', whiteSpace: 'nowrap' }}>
+                        {fmtDateBR(item.data)}{item.dataFim ? ` a ${fmtDateBR(item.dataFim)}` : ''}
+                      </span>
                       <span>{item.nome}</span>
                     </div>
                   ))}
