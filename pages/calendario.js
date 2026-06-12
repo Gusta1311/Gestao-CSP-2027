@@ -80,7 +80,7 @@ export default function Calendario() {
       tipo: 'Pedagógico',
       data_inicio: clickModal.date,
       data_fim: clickModal.date,
-      status: 'Confirmado',
+      status: 'Planejado',
     });
     setSaving(false);
     if (error) {
