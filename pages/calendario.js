@@ -45,9 +45,10 @@ export default function Calendario() {
   const [eventos, setEventos] = useState({});
   const [loading, setLoading] = useState(true);
   const [clickModal, setClickModal] = useState(null);
-  const [form, setForm] = useState({ nome: '', cor: '#1B5CA8' });
+  const [form, setForm] = useState({ nome: '', cor: '#1B5CA8', data_fim: '' });
   const [saving, setSaving] = useState(false);
   const [erroSave, setErroSave] = useState('');
+  const EMPTY_FORM = { nome: '', cor: '#1B5CA8', data_fim: '' };
 
   useEffect(() => { loadEventos(); }, []);
 
@@ -79,7 +80,7 @@ export default function Calendario() {
       cor: form.cor,
       tipo: 'Pedagógico',
       data_inicio: clickModal.date,
-      data_fim: clickModal.date,
+      data_fim: form.data_fim && form.data_fim >= clickModal.date ? form.data_fim : clickModal.date,
       status: 'Planejado',
     });
     setSaving(false);
@@ -88,7 +89,7 @@ export default function Calendario() {
       return;
     }
     setClickModal(null);
-    setForm({ nome: '', cor: '#1B5CA8' });
+    setForm({ nome: '', cor: '#1B5CA8', data_fim: '' });
     loadEventos();
   }
 
@@ -120,7 +121,7 @@ export default function Calendario() {
       bg = '#FFF3E0'; color = '#E53935'; fontWeight = 700;
     } else if (evList.length > 0) {
       const cor = evList[0].cor || '#1B5CA8';
-      bg = cor + '28';
+      bg = cor + '45';
       dotColor = cor;
       fontWeight = 700;
     } else if (dow === 0 || dow === 6) {
@@ -162,27 +163,30 @@ export default function Calendario() {
     if (!canEdit) return;
     const key = dateKey(y, m, d);
     setClickModal({ date: key, evList: eventos[key] || [] });
-    setForm({ nome: '', cor: '#1B5CA8' });
+    setForm({ nome: '', cor: '#1B5CA8', data_fim: '' });
   }
 
   if (loading) return <Layout title="Calendário 2027"><div className="loading-spinner"><div className="spinner"></div></div></Layout>;
 
   return (
     <Layout title="Calendário 2027" subtitle="Calendário acadêmico do Colégio São Paulo 2027">
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap', fontSize: '12px' }}>
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', flexWrap: 'wrap', fontSize: '12px', alignItems: 'center' }}>
         {[
-          { color: '#FFF3E0', label: 'Feriado' },
-          { color: '#E3F2FD', label: 'Evento/anotação' },
-          { color: '#fafafa', label: 'Fim de semana' },
-          { color: 'white', label: 'Dia letivo' },
+          { color: '#FFF3E0', border: '#f5c6a0', label: 'Feriado' },
+          { color: '#f0f0f0', border: '#ddd',    label: 'Fim de semana' },
+          { color: 'white',   border: '#ddd',    label: 'Dia letivo' },
         ].map(l => (
           <div key={l.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '14px', height: '14px', background: l.color, border: '1px solid #ddd', borderRadius: '3px' }} />
+            <div style={{ width: '14px', height: '14px', background: l.color, border: `1px solid ${l.border}`, borderRadius: '3px' }} />
             <span style={{ color: 'var(--cinza-texto)' }}>{l.label}</span>
           </div>
         ))}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#1B5CA8' }} />
+          <span style={{ color: 'var(--cinza-texto)' }}>Anotação (cor escolhida)</span>
+        </div>
         {canEdit && (
-          <span style={{ color: 'var(--cinza-texto)', marginLeft: '8px' }}>
+          <span style={{ color: 'var(--azul)', fontWeight: 600 }}>
             Clique em qualquer dia para adicionar uma anotação
           </span>
         )}
@@ -214,12 +218,14 @@ export default function Calendario() {
                     <div
                       key={i}
                       className={`day-cell${canEdit ? ' clickable' : ''}`}
-                      style={{ background: bg, color, fontWeight }}
+                      style={{
+                        background: bg, color, fontWeight,
+                        borderLeft: dotColor ? `3px solid ${dotColor}` : undefined,
+                      }}
                       title={title}
                       onClick={() => handleDayClick(y, mesIdx, d)}
                     >
                       <span className="day-num">{d}</span>
-                      {dotColor && <div className="day-dot" style={{ background: dotColor }} />}
                     </div>
                   );
                 })}
@@ -266,7 +272,7 @@ export default function Calendario() {
               )}
               {erroSave && <div className="alert alert-error" style={{ marginBottom: '12px' }}>⚠️ {erroSave}</div>}
               <div className="form-group">
-                <label className="form-label">Nova anotação</label>
+                <label className="form-label">Nome da anotação</label>
                 <input
                   className="form-control"
                   value={form.nome}
@@ -274,6 +280,17 @@ export default function Calendario() {
                   placeholder="Ex: Reunião pedagógica, Avaliação..."
                   onKeyDown={e => e.key === 'Enter' && saveEvento()}
                   autoFocus
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Data de término <span style={{ color: 'var(--cinza-texto)', fontWeight: 400 }}>(opcional — se ocupar mais de um dia)</span></label>
+                <input
+                  type="date"
+                  className="form-control"
+                  min={clickModal?.date}
+                  max="2027-12-31"
+                  value={form.data_fim}
+                  onChange={e => setForm(f => ({ ...f, data_fim: e.target.value }))}
                 />
               </div>
               <div className="form-group">

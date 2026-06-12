@@ -191,12 +191,22 @@ export default function Dashboard() {
               <h3>📊 Bimestres 2027</h3>
             </div>
             <div className="card-body">
-              {[
-                { label: '1º Bimestre', periodo: 'Fev-Abr', status: 'Encerrado', color: 'verde' },
-                { label: '2º Bimestre', periodo: 'Mai-Jun', status: 'Em andamento', color: 'amarelo' },
-                { label: '3º Bimestre', periodo: 'Jul-Set', status: 'Futuro', color: 'cinza' },
-                { label: '4º Bimestre', periodo: 'Out-Dez', status: 'Futuro', color: 'cinza' },
-              ].map(b => (
+              {(() => {
+                const hoje = new Date().toISOString().split('T')[0];
+                const bimestres = [
+                  { label: '1º Bimestre', periodo: 'Fev-Abr', inicio: '2027-02-01', fim: '2027-04-30' },
+                  { label: '2º Bimestre', periodo: 'Mai-Jun', inicio: '2027-05-01', fim: '2027-06-30' },
+                  { label: '3º Bimestre', periodo: 'Jul-Set', inicio: '2027-07-01', fim: '2027-09-30' },
+                  { label: '4º Bimestre', periodo: 'Out-Dez', inicio: '2027-10-01', fim: '2027-12-31' },
+                ];
+                return bimestres.map(b => {
+                  let status, color;
+                  if (hoje > b.fim) { status = 'Encerrado'; color = 'verde'; }
+                  else if (hoje >= b.inicio) { status = 'Em andamento'; color = 'amarelo'; }
+                  else { status = 'Futuro'; color = 'cinza'; }
+                  return { ...b, status, color };
+                });
+              })().map(b => (
                 <div key={b.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--cinza-medio)' }}>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: '13px' }}>{b.label}</div>
