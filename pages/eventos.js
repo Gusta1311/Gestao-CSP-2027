@@ -7,7 +7,7 @@ const TIPOS = ['Pedagógico','Cultural','Esportivo','Administrativo','Feriado','
 const STATUS = ['Planejado','Em andamento','Realizado','Cancelado'];
 const BIMESTRES = ['Pré-ano','1º','2º','3º','4º','Pós-ano'];
 
-const EMPTY_FORM = { nome: '', descricao: '', data_inicio: '', data_fim: '', tipo: 'Pedagógico', bimestre: '1º', status: 'Planejado' };
+const EMPTY_FORM = { nome: '', descricao: '', data_inicio: '2027-01-01', data_fim: '', tipo: 'Pedagógico', bimestre: '1º', status: 'Planejado' };
 
 export default function Eventos() {
   const { canEdit, user } = useAuth();
@@ -160,11 +160,11 @@ export default function Eventos() {
               <div className="grid-2">
                 <div className="form-group">
                   <label className="form-label">Data Início *</label>
-                  <input type="date" className="form-control" value={form.data_inicio} onChange={e => setForm(f => ({...f, data_inicio: e.target.value}))} />
+                  <input type="date" className="form-control" min="2027-01-01" max="2027-12-31" value={form.data_inicio} onChange={e => setForm(f => ({...f, data_inicio: e.target.value}))} />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Data Fim</label>
-                  <input type="date" className="form-control" value={form.data_fim} onChange={e => setForm(f => ({...f, data_fim: e.target.value}))} />
+                  <input type="date" className="form-control" min="2027-01-01" max="2027-12-31" value={form.data_fim} onChange={e => setForm(f => ({...f, data_fim: e.target.value}))} />
                 </div>
               </div>
               <div className="grid-2">

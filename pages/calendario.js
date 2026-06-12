@@ -21,10 +21,12 @@ const CORES = [
 ];
 
 const FERIADOS_2027 = {
-  '2027-01-01': 'Confraternização Universal',
+  '2027-01-01': 'Ano Novo',
+  '2027-01-25': 'Aniversário de São Paulo',
   '2027-02-08': 'Carnaval',
   '2027-02-09': 'Carnaval',
   '2027-02-10': 'Quarta-feira de Cinzas',
+  '2027-03-26': 'Sexta-feira Santa',
   '2027-03-28': 'Páscoa',
   '2027-04-21': 'Tiradentes',
   '2027-05-01': 'Dia do Trabalhador',
@@ -45,6 +47,7 @@ export default function Calendario() {
   const [clickModal, setClickModal] = useState(null);
   const [form, setForm] = useState({ nome: '', cor: '#1B5CA8' });
   const [saving, setSaving] = useState(false);
+  const [erroSave, setErroSave] = useState('');
 
   useEffect(() => { loadEventos(); }, []);
 
@@ -53,8 +56,15 @@ export default function Calendario() {
     const { data } = await supabase.from('eventos').select('*').order('data_inicio');
     const byDate = {};
     (data || []).forEach(ev => {
-      if (!byDate[ev.data_inicio]) byDate[ev.data_inicio] = [];
-      byDate[ev.data_inicio].push(ev);
+      const start = new Date(ev.data_inicio + 'T12:00:00');
+      const end = ev.data_fim ? new Date(ev.data_fim + 'T12:00:00') : start;
+      const cur = new Date(start);
+      while (cur <= end) {
+        const key = cur.toISOString().split('T')[0];
+        if (!byDate[key]) byDate[key] = [];
+        byDate[key].push(ev);
+        cur.setDate(cur.getDate() + 1);
+      }
     });
     setEventos(byDate);
     setLoading(false);
@@ -63,7 +73,8 @@ export default function Calendario() {
   async function saveEvento() {
     if (!form.nome.trim() || !clickModal) return;
     setSaving(true);
-    await supabase.from('eventos').insert({
+    setErroSave('');
+    const { error } = await supabase.from('eventos').insert({
       nome: form.nome.trim(),
       cor: form.cor,
       tipo: 'Pedagógico',
@@ -72,6 +83,10 @@ export default function Calendario() {
       status: 'Confirmado',
     });
     setSaving(false);
+    if (error) {
+      setErroSave('Erro ao salvar: ' + error.message);
+      return;
+    }
     setClickModal(null);
     setForm({ nome: '', cor: '#1B5CA8' });
     loadEventos();
@@ -249,6 +264,7 @@ export default function Calendario() {
                   ))}
                 </div>
               )}
+              {erroSave && <div className="alert alert-error" style={{ marginBottom: '12px' }}>⚠️ {erroSave}</div>}
               <div className="form-group">
                 <label className="form-label">Nova anotação</label>
                 <input
